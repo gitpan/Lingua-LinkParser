@@ -1,6 +1,6 @@
   ==================================================================
-  Lingua::LinkParser 1.06
-  Copyright 2000 by Dan Brian
+  Lingua::LinkParser 1.07
+  Copyright 2000-2003 by Dan Brian
 
   This program is free software; you can redistribute it and/or modify
   it under the same terms as Perl itself.
@@ -15,15 +15,21 @@ Description
    connecting pairs of words." Version 1.0 of this module implements the 
    new 4.0 parser API.
 
+   PLEASE NOTE that there exist memory leaks with the calls that are 
+   supposed to free sentence objects. This means that single processes 
+   parsing many sentences will gradually grow larger. I am working to 
+   resolve this problem.
+
 Requirements
 
    To install Lingua::LinkParser you must have already downloaded, 
    compiled and install the Link Parser package from 
    http://www.link.cs.cmu.edu/link/.
 
-   This module has been compiled and tested with Perl 5.6 on Linux 
-   2.2.13 & 2.2.14. Any incompatibilities *should* be the result of lib
-   issues within the Link Parser itself, but these seem very stable.
+   This module has been compiled and tested with Perl 5.6 and 5.8 on Linux 
+   2.2.13 & 2.2.14, and Perl 5.6 and 5.8 on OS X. Any incompatibilities 
+   *should* be the result of lib issues within the Link Parser itself, but 
+   these seem very stable.
 
 Installation
 
@@ -34,7 +40,7 @@ Installation
    This will ask you where your Link Parser package directory is 
    located, and must contain the distribution obj/, include/, and data/
    directories, with obj/ containing compiled object files. This 
-   might look something like "/home/username/system-4.0/link-4.0".
+   might look something like "/home/username/system-4.1/link-4.1".
 
    Once the Makefile is written, you can build and test with:
 

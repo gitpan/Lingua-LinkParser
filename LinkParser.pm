@@ -13,7 +13,7 @@ require DynaLoader;
 use vars qw(@ISA $VERSION $DATA_DIR);
 
 @ISA = qw(DynaLoader);
-$VERSION = '1.06';
+$VERSION = '1.07';
 
 # this global stores the directory path for the Link Grammar data
 $DATA_DIR='/Users/garron/Sources/system-4.1/link-4.1/data';
@@ -29,6 +29,9 @@ Lingua::LinkParser - Perl module implementing the Link Grammar Parser by Sleator
   our $parser = new Lingua::LinkParser;
   my $sentence = $parser->create_sentence("This is the turning point.");
   my @linkages = $sentence->linkages;
+  # If there are NO LINKAGES, set min_null_count to a positive number:
+  # $parser->opts('min_null_count' => 1);
+  # See scripts/parse.pl for examples.
   foreach $linkage (@linkages) {
       print ($parser->get_diagram($linkage));
   }

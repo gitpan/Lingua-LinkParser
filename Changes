@@ -91,6 +91,11 @@ Revision history for Perl extension Lingua::LinkParser.
       will collect methods like 'extract_subject' that require no link knowledge
     - Fixed several POD bugs related to $sentence->linkages.
 
+1.07
+    - Added documentation to make num_linkages() more clear.
+    - Fixed OS X Jaguar build problems
+
+
 TODO:
 
     Change constructors to verify arguments.

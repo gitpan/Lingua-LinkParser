@@ -13,6 +13,12 @@ chomp(@objects = `ls $LP_DIR/obj/*.o`);
 if (scalar(@headers) < 30)  { die "You are missing headers; check your LP package's include/ directory."; }
 if (scalar(@objects) < 26)  { die "You are missing object files; check you LP package's obj/ directory."; }
 
+# Remove parse.o from @ objects to fix symbol conflicts under OS X. This can
+# alternatively be done using something like:
+# echo '_main' > syms.txt
+# nmedit -R syms.txt parse.o
+@objects = grep {!/parse\.o$/} @objects;
+
 print "Setting data file path in LinkParser.pm ....\n";
 print " (if you move this location, change the path entry for global \$DATA_DIR)\n";
 link("LinkParser.pm","LinkParser.pm.old");
