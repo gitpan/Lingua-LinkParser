@@ -13,7 +13,7 @@ require DynaLoader;
 use vars qw(@ISA $VERSION $DATA_DIR);
 
 @ISA = qw(DynaLoader);
-$VERSION = '1.07';
+$VERSION = '1.08';
 
 # this global stores the directory path for the Link Grammar data
 $DATA_DIR='/Users/garron/Sources/system-4.1/link-4.1/data';
@@ -441,6 +441,8 @@ http://www.link.cs.cmu.edu/link/.
 
   sub DESTROY {
     my $self = shift;
+    Lingua::LinkParser::dictionary_delete($self->{_dict});
+    Lingua::LinkParser::parse_options_delete($self->{_opts});    
     $self = {};
   }
 

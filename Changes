@@ -95,8 +95,11 @@ Revision history for Perl extension Lingua::LinkParser.
     - Added documentation to make num_linkages() more clear.
     - Fixed OS X Jaguar build problems
 
+1.08 (pending 1.1)
+    - Fixed memory leaks with rewritten calls to all _delete functions
 
 TODO:
 
-    Change constructors to verify arguments.
+    Add support for CNode structs, to allow for browsing of constituent trees. 
+    Write functions for easy browsing of constituent trees.
 

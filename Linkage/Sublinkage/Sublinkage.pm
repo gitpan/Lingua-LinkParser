@@ -5,7 +5,7 @@
   use overload '""' => "new_as_string";
   use vars qw($VERSION);
 
-  $VERSION = '1.07';
+  $VERSION = '1.08';
 
   sub new {
       my $class = shift;
