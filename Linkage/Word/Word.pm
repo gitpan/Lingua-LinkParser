@@ -2,7 +2,7 @@ package Lingua::LinkParser::Linkage::Word;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = '1.08';
+$VERSION = '1.09';
 
 sub new {
     my $class     = shift;
@@ -17,12 +17,19 @@ sub new {
         my $linkword = '';
         my $lword = $linkage->get_word($link->lword); 
         my $rword = $linkage->get_word($link->rword);
-        if ($linkage->get_word($position) eq $rword) {
+
+        if ($position == $link->rword) {
             $linkword = $link->lword . ":" . $linkage->get_word($link->lword);
-        } elsif ($linkage->get_word($position) eq $lword) {
+        } elsif ($position == $link->lword) {
             $linkword = $link->rword . ":" . $linkage->get_word($link->rword);
         }
-        #print "label is $label, lword is $lword, rword is $rword, word is $linkword\n";
+
+        #if ($linkage->get_word($position) eq $rword) {
+        #    $linkword = $link->lword . ":" . $linkage->get_word($link->lword);
+        #} elsif ($linkage->get_word($position) eq $lword) {
+        #    $linkword = $link->rword . ":" . $linkage->get_word($link->rword);
+        #}
+
         if ($linkword) {
             push @links, Lingua::LinkParser::Linkage::Sublinkage::Link->new (
                 $i, $linkage->{index}, $linkage->{linkage}, $label, $linkword );

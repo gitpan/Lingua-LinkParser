@@ -1,10 +1,27 @@
   ==================================================================
-  Lingua::LinkParser 1.07
+  Lingua::LinkParser 1.09
   Copyright 2000-2003 by Dan Brian
 
   This program is free software; you can redistribute it and/or modify
   it under the same terms as Perl itself.
   ==================================================================
+
+LINUX USERS:
+
+   There is a namespace compatability conflict documented at:
+
+     http://rt.cpan.org/NoAuth/Bug.html?id=4428
+
+   If you get segfaults or "dictionary creation" errors, follow the advice 
+   of Alan Buckeridge:
+
+     There's a routine called 'advance' in the file 'read-dict.c' in the
+     parser's source directory.  By replacing each occurrence of "advance"
+     with something else (I used "ad_vance") and recompiling the parser, I
+     was able to 'make' and 'make test' for Lingua::LinkParser.
+
+   This has fixed the problem in all cases, as far as I'm aware. Thanks Alan.
+
 
 Description
 
