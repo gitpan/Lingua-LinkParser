@@ -13,10 +13,10 @@ require DynaLoader;
 use vars qw(@ISA $VERSION $DATA_DIR);
 
 @ISA = qw(DynaLoader);
-$VERSION = '1.04';
+$VERSION = '1.05';
 
 # this global stores the directory path for the Link Grammar data
-$DATA_DIR='/home/garron/system-4.1/link-4.1/data';
+$DATA_DIR='/home/garron/system-4.1/link-4.1//data';
 
 =head1 NAME
 
@@ -343,10 +343,6 @@ Supplying no VALUE returns the current value for OPTION. Note that not all of th
  all_short_connectors
   If true, then all connectors have length restrictions imposed on them.
 
-
-=head1 BUGS/TODO
-
-- Add domain functions
 
 =head1 AUTHOR
 

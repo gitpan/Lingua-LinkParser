@@ -20,8 +20,8 @@ unlink("LinkParser.pm");
 open FILE, "LinkParser.pm.old";
 open NEWFILE, ">LinkParser.pm";
 while (<FILE>) {
-    if (/^\s*our\s*\$DATA_DIR\s*=/) {
-        print NEWFILE "our \$DATA_DIR='$LP_DIR\/data'\;\n";
+    if (/^\s*\$DATA_DIR\s*=/) {
+        print NEWFILE "\$DATA_DIR='$LP_DIR\/data'\;\n";
     } else {
         print NEWFILE;
     }
