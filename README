@@ -1,0 +1,62 @@
+  Lingua::LinkParser 1.0
+  Copyright 2000, Dan Brian
+  All rights reserved.
+
+  This program is free software; you can redistribute it and/or modify
+  it under the same terms as Perl itself.
+
+Description
+
+   To quote the Link Grammar documentation, "the Link Grammar Parser 
+   is a syntactic parser of English, based on link grammar, an original 
+   theory of English syntax. Given a sentence, the system assigns to it 
+   a syntactic structure, which consists of set of labeled links 
+   connecting pairs of words."
+
+Requirements
+
+   To install Lingua::LinkParser you must have already downloaded, 
+   compiled and install the Link Parser package from 
+   http://www.link.cs.cmu.edu/link/.
+
+   This module has been compiled and tested with Perl 5.005_03 on 
+   Linux 2.2.13.
+
+Installation
+
+   To begin installation type:
+
+       perl Makefile.PL
+
+   This will ask you where your Link Parser package directory is 
+   located, and must contain the distribution obj/ and include/ 
+   directories, with obj/ containing compiled object files.
+
+   Once the Makefile is written, you can build and test with:
+
+      make
+      make test
+
+   The test will load the parser dictionary files and parse a sample 
+   sentence. If they do not, back up and figure out why before 
+   installation. To install:
+
+      make install
+
+Documentation
+
+   Full documentation is available in pod format within the .pm file:
+
+      perldoc Lingua::LinkParser
+
+   or
+
+      perldoc ./LinkParser.pm
+
+
+Todo
+
+   Documentation is lacking for many functions, and not all of the API
+   functions have corresponding Perl entries. Help!
+
+
