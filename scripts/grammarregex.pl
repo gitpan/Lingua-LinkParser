@@ -10,6 +10,7 @@ while (1)
 {
   print "Enter a sentence> "; 
   my $input = <STDIN>;
+  last if $input =~ /^\s*$/;
   my $sentence = $parser->create_sentence($input);
   my $linkage  = $sentence->linkage(1);
   # computing the union and then using the last sublinkage 
@@ -23,8 +24,9 @@ while (1)
                     '(\w+(?:\.\w)*)';  # match and save the word itself
   my $other_stuff = '[^\)]+';          # match other stuff within parenthesis
   my $rocks       = '\"(rock[s|ed]*).v\"';    # match and store verb
-  my $no_objects  = '[^(?:O.{1,2}\:' .        # don't match objects
-                   '\d+\:\w+(?:\.\w)*)]*\)';
+
+  # Fixed from printed code in TPJ #19.
+  my $no_objects = '(?![^\)]* O.{1,3}:)';  # don't match objects
 
   my $pattern     = "$what_rocks $other_stuff $rocks $no_objects";
 
@@ -63,7 +65,7 @@ while (1)
         }
       }
     }
-    print "   -> ", join (" ", @wordlist, $wordtxt);
+    print "   -> ", join (" ", @wordlist, $wordtxt), "\n";
   }
 }
 

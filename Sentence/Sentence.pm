@@ -4,7 +4,7 @@
   use Lingua::LinkParser::Linkage;
   use overload '""' => "as_string";
 
-  our $VERSION = '1.02';
+  our $VERSION = '1.03';
 
   sub new {
       my $class = shift;

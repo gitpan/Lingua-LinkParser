@@ -4,7 +4,7 @@
   use Lingua::LinkParser::Linkage::Sublinkage::Link;
   use overload '""' => "new_as_string";
 
-  our $VERSION = '1.02';
+  our $VERSION = '1.03';
 
   sub new {
       my $class = shift;
@@ -31,7 +31,7 @@
       my $return = '';
       my $i = 0;
       foreach my $word ($self->words) {
-          my ($before,$after) = '';
+          my ($before,$after) = ('','');
           foreach my $link ($word->links) {
               my $position = $link->linkposition;
               my $text     = $link->linkword;

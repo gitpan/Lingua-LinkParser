@@ -67,4 +67,15 @@ Revision history for Perl extension Lingua::LinkParser.
     - Changed the default behaviour of the overloaded ("") for ::Linkage and 
       ::Sublinkage to use 'new_as_string'.
 
+1.03  Mon Nov 6 11:46:28 2000
+
+    Thanks to Ronald J Kimball for recommending the following changes:
+
+    - Made changes to Linkage.pm and Sublinkage.pm to avoid uninitialized 
+      value warnings.
+    - Fixed grammarregex.pl to use a negated look-ahead assertion.
+    
+TODO:
+
+    Change constructors to verify arguments.
 

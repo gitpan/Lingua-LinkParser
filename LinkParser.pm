@@ -11,7 +11,7 @@ require Exporter;
 require DynaLoader;
 
 our @ISA = qw(DynaLoader);
-our $VERSION = '1.02';
+our $VERSION = '1.03';
 
 # this global stores the directory path for the Link Grammar data
 our $DATA_DIR='/home/garron/system-4.1/link-4.1/data';

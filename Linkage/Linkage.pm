@@ -10,7 +10,7 @@ use Lingua::LinkParser::Linkage::Word;
 #use overload q("") => "as_string";
 use overload q("") => "new_as_string";
 
-our $VERSION = '1.02';
+our $VERSION = '1.03';
 
 sub new {
   my $class = shift;
@@ -28,7 +28,7 @@ sub new_as_string {
   my $return = '';
   my $i = 0;
   foreach my $word ($linkage->words) {
-      my ($before,$after) = '';
+      my ($before,$after) = ('','');
       foreach my $link ($word->links) {
           my $position = $link->linkposition;
           my $text     = $link->linkword;

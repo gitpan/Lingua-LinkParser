@@ -8,7 +8,7 @@ require AutoLoader;
 our @ISA    = ("Exporter");
 our @EXPORT = qw(define);
 
-our $VERSION = '1.02';
+our $VERSION = '1.03';
 
 our %SHORT_DEFS = (
 

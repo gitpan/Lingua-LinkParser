@@ -7,11 +7,11 @@ $parser = new Lingua::LinkParser;
 $parser->opts('max_null_count' => 3);
 $parser->opts('min_null_count' => 1);
 
-$sentence = $parser->create_sentence("We met in New York.");
+$sentence = $parser->create_sentence("The man put the book on the table..");
 
 print "linkages: ", $sentence->num_linkages, "\n";
 
 for $i (1 .. $sentence->num_linkages) {
-    print $i, ": ", $parser->print_constituent_tree($sentence->linkage($i),2), "\n";
+    print $i, ": ", $parser->print_constituent_tree($sentence->linkage($i),1), "\n";
 }
 
