@@ -322,6 +322,15 @@ parse_options_resources_exhausted(opts)
 	Parse_Options	opts
 
 void
+parse_options_set_max_sentence_length(opts, val)
+        Parse_Options   opts
+        int     val
+
+int
+parse_options_get_max_sentence_length(opts)
+        Parse_Options   opts
+
+void
 parse_options_set_all_short_connectors(opts, val)
 	Parse_Options	opts
 	int	val

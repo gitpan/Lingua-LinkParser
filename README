@@ -1,5 +1,5 @@
   ==================================================================
-  Lingua::LinkParser 1.0
+  Lingua::LinkParser 1.02
   Copyright 2000 by Dan Brian
 
   This program is free software; you can redistribute it and/or modify
@@ -60,6 +60,8 @@ Documentation
 
       perldoc ./LinkParser.pm
 
+   The scripts in 'scripts/' demonstrate a general overview of the 
+   functionality.
 
 Todo
 

@@ -52,4 +52,19 @@ Revision history for Perl extension Lingua::LinkParser.
     - Lots of examples added to 'scripts/', including a grammar regex
     - Added alternate methods for overloading ::Linkage and
       ::Sublinkage, "new_as_string()", to experiment with grammar regex
+    - Changed overloaded behaviour for ("") constants for ::Sentence to 
+      print out the original sentence text.
+
+1.02  Tue Sep 5 23:42:58 2000
+
+    - Added XSUBs for 'max_sentence_length' opts.
+    - Fixed Makefile.PL to find data file paths (link parser 4.1 still has 
+      dictionary files named "4.0")
+    - Changed '::Linkage::opts()' to take a hash of keys/values, or returns 
+      a value of only one argument is passed.
+    - Modified the script 'scripts/parse.pl' to parse null linkages 
+      automatically, and demonstrate more elements of the parser options.
+    - Changed the default behaviour of the overloaded ("") for ::Linkage and 
+      ::Sublinkage to use 'new_as_string'.
+
 

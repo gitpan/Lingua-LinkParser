@@ -10,7 +10,7 @@ use Lingua::LinkParser::Linkage::Word;
 #use overload q("") => "as_string";
 use overload q("") => "new_as_string";
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 
 sub new {
   my $class = shift;

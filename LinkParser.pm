@@ -11,10 +11,10 @@ require Exporter;
 require DynaLoader;
 
 our @ISA = qw(DynaLoader);
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 
 # this global stores the directory path for the Link Grammar data
-our $DATA_DIR='/home/garron/system-4.0/link-4.0/data';
+our $DATA_DIR='/home/garron/system-4.1/link-4.1/data';
 
 =head1 NAME
 
@@ -47,7 +47,7 @@ This documentation should be supplemented with the extensive texts included with
 
 This returns a new Lingua::LinkParser object, loads the specified dictionary files, and sets basic configuration. If no dictionary files are specified, the parser will attempt to load the files using the path in global $DATA_DIR. This is a change from the Link Parser 3.0 implementation, where defaults were stored in the C API. The hash passed may also contain keys equivalent to the link parser options, in order to set these before a parser object is returned. These options are all lower case, and listed later in this document.
 
-=item $parser->opts(OPTION_NAME,OPTION_VALUE)
+=item $parser->opts(OPTION_NAME => OPTION_VALUE, ...)
 
 This sets the parser option OPTION_NAME to the value specified by OPTION_VALUE.
 A full list of these options is found at the end of this document, as well as
@@ -388,17 +388,19 @@ http://www.link.cs.cmu.edu/link/.
 
   sub opts {
     my $self = shift;
-    my ($option,$setting) = @_;
-    my $return = "";
-    if (!$option) {
-        return $self->{_opts};
-    }
-    if (defined $setting) {
-        eval("Lingua::LinkParser::parse_options_set_$option(\$self->opts,'$setting')");
+    my $return = 1;
+    if (@_ == 0) { return $self->{_opts} }
+    if (@_ == 1) {
+        eval("\$return = Lingua::LinkParser::parse_options_get_$_[0](\$self->{_opts})");
+        if ($@) { croak $@ };
     } else {
-        eval("\$return = Lingua::LinkParser::parse_options_get_$option(\$self->opts)");
+        my %arg = @_;
+        foreach my $key (keys %arg) {
+            eval("Lingua::LinkParser::parse_options_set_$key(\$self->{_opts},'$arg{$key}')");
+            if ($@) { croak $@ };
+        }
     }
-    if ($@) { croak $@; }
+    Lingua::LinkParser::parse_options_reset_resources($self->{_opts});
     $return;
   }
 

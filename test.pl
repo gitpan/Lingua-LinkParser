@@ -19,27 +19,28 @@ print "ok 1\n";
 $parser = new Lingua::LinkParser;
 print "ok 2\n";
 
-$parser->opts('disjunct_cost' => 2);
-$parser->opts('linkage_limit' => 101);
-$parser->opts('verbosity' => 1);
-if ($parser->opts('linkage_limit') == 101) {
+$parser->opts('disjunct_cost' => 2,
+              'linkage_limit' => 101,
+              'verbosity'     => 1
+             );
+
+if (($parser->opts('linkage_limit') == 101) &&
+    ($parser->opts('disjunct_cost') == 2)) {
   print "ok 3\n";
 } else {
   print "not ok 3\n";
 }
 
-
 $sentence = $parser->create_sentence("We tried to make the tests exhaustive.");
-if (defined $sentence) { print "ok 4\n"; } else
+if ($sentence) { print "ok 4\n"; } else
                        { print "not ok 4\n"; }
-
 
 $num_linkages = $sentence->num_linkages;
 if ($num_linkages > 0) { print "ok 5\n"; } else 
                        { print "not ok 5\n"; }
 
 $linkage = $sentence->linkage(1);
-if (defined $linkage) { print "ok 6\n"; } else
+if ($linkage) { print "ok 6\n"; } else
                       { print "not ok 6\n"; }
 
 $diagram = $parser->get_diagram($linkage);
@@ -51,7 +52,7 @@ if ($num_sublinkages > 0) { print "ok 8\n"; } else
                           { print "not ok 8\n"; }
 
 $sublinkage = $linkage->sublinkage(1);
-if (defined $sublinkage) { print "ok 9\n"; } else
+if ($sublinkage) { print "ok 9\n"; } else
                          { print "not ok 9\n"; }
 
 $num_links = $sublinkage->num_links;

@@ -4,7 +4,7 @@
   use Lingua::LinkParser::Linkage;
   use overload '""' => "as_string";
 
-  our $VERSION = '1.01';
+  our $VERSION = '1.02';
 
   sub new {
       my $class = shift;
@@ -15,7 +15,7 @@
           _opts => $parser->opts,
           _text => $text
       };
-      $self->{_num_linkages} = Lingua::LinkParser::sentence_parse($self->sent, $parser->opts);
+      $self->{_num_linkages} = Lingua::LinkParser::sentence_parse($self->{_sent}, $self->{_opts});
       return $self;
   }
 
@@ -105,15 +105,10 @@
       return @bigstruct;
   }
 
-  #sub close {
-  #    my $self = shift;
-  #    $self->DESTROY();
-  #}
-
-  #sub DESTROY {
-  #    my $self = shift;
-  #    Lingua::LinkParser::sentence_delete($self->sent);
-  #}
+  sub length {
+      my $self = shift;
+      Lingua::LinkParser::sentence_length($self->sent);
+  }
 
 1;
 

@@ -1,7 +1,7 @@
 package Lingua::LinkParser::Dictionary;
 use strict;
 
-  our $VERSION = "1.01";
+our $VERSION = "1.02";
 
 sub new {
     my $class = shift;
