@@ -1,0 +1,58 @@
+<HTML>
+<HEAD>
+<TITLE>Guide-to-Links: K</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<b><kbd><font size=+1>*** Guide-to-Links ***<br></font><font size=+4>
+    K</font></kbd></b>
+<PRE>
+K connects certain verbs with particles like "in", "out", "up",
+and the like.
+
+                  +-K-+
+                  |   |
+	The man came up	
+
+	*The man arrived up
+
+Particles that can be used in this way have "K-" disjoined
+with everything else. (Most are also prepositions; a few, like
+"away", are not.)
+
+We distinguish between verbs that can take particles and
+those that do not, but among particle-taking verbs, we do
+not distinguish between specific verb-particle pairs: we
+allow "We sorted them out/*up", "We put them in/*over".
+
+Verbs that take particles may be transitive ("pick"),
+intransitive ("come"), or trans/intrans ("move"). With
+transitive verbs, the particle may either precede or
+follow the direct object: "We picked the dog up"; "We
+picked up the dog". This yields the following expression.
+
+	pick: (S- or ....) & ((K+ & O+) or ((O+ or B-) & {K+}));
+				 
+				^ particle        ^ particle
+			      precedes object     follows object
+
+The particle is almost always optional. (There are a few
+exceptions, like "put", which requires either a particle or a
+prepositional phrase: "We put it in", "*We put it".) However:
+if we made the particle optional in both the "pre-object" case
+and the "post-object case", then "We picked the dog" would
+receive two parses. So it must be obligatory in one case,
+optional in the other.
+
+A further complication: with transitive verbs, the particle
+may always follow the object, but it may precede it only if
+the object is a full noun-phrase, not a pronoun: "We picked it
+up," "*We picked up it". We enforce this using
+post-processing.  In the expression for transitive verbs, the
+O+ in the "particle-precedes-object" case is subscripted
+"O*n+". Pronouns are then subscripted "Ox-". "Oxn" links
+are then prohibited in post-processing.
+
+</PRE>
+<a href="">Grammar Documentation Page</a>.
+</BODY>
+</HTML>

@@ -1,8 +1,39 @@
 Revision history for Perl extension Lingua::LinkParser.
 
 0.01  Thu Jan 13 09:54:28 2000
-	- original version.
+    - original version.
 
 0.05  Tue Feb 8 13:00:13 2000
     - public beta
+
+1.0   Wed Aug 16 14:35:44 2000
+    - Rewritten for the new Link Grammar 4.0 API
+    - Got LinkParser.xs to work with the char** functions, so 
+      linkage_get_words and get_domain_names now work.
+    - Makefile.PL changes LinkParser.pm to find data directory
+    - new() expects a hash defined the the pod documentation, and uses the 
+      the global $DATA_DIR to as a default path
+    - Added Lingua::LinkParser::Definitions to enable easy retrieval of 
+      link summaries and definitions from within the program. This is a 
+      totally non-orthoganal method of distributing this info, but I find 
+      it handy.
+    - Added linkage_get_word to ::Linkage, thanks Richard A. Wells.
+    - Added linkage_get_words, also thanks to Richard.
+    - Added access to the domain functions with num_domains and domain_names 
+      to the Lingua::LinkParser::Sublinkage class.
+    - Added function 'violation_name' to Lingua::LinkParser::Linkage class to 
+      return the label for a post-processing linkage violation.
+    - Added the new 'print_constituent_tree()' from the 4.0 API to display 
+      constituent tree structures.
+    - Added tests to 'test.pl' for 'get_words()', 'num_domains()', and 
+      'domain_names()'
+    - Added scripts to demonstrate use of 'bigstruct()' and 'define()'
+    - Added script to demonstrate 'print_constituent_tree()'
+    - Included the link guide in directory 'guide', since it's not in the 
+      distribution.
+    - Overloaded the stringify operators ("") for classes ::Sentence,
+      ::Linkage, and ::Sublinkage to display a diagram for each.
+    - Changed 'get_postscript' to use new 'mode' parameter
+    - Added the link functions that had previously only been available to 
+      sublinkage objects to linkage objects.
 

@@ -2,13 +2,20 @@ package Lingua::LinkParser;
 
 require 5.005;
 use strict;
-use vars qw($VERSION @ISA @EXPORT_OK @EXPORT $DICTFILE $PPFILE);
+use Carp;
+use Lingua::LinkParser::Sentence;
+use Lingua::LinkParser::Linkage;
+use Lingua::LinkParser::Linkage::Sublinkage;
+use Lingua::LinkParser::Linkage::Sublinkage::Link;
 
 require Exporter;
 require DynaLoader;
 
-@ISA = qw(Exporter DynaLoader);
-$VERSION = '0.05';
+our @ISA = qw(Exporter DynaLoader);
+our $VERSION = '1.0';
+
+# this global stores the directory path for the Link Grammar data
+our $DATA_DIR='/home/garron/system-4.0/link-4.0/data';
 
 =head1 NAME
 
@@ -18,7 +25,7 @@ Lingua::LinkParser - Perl module implementing the Link Grammar Parser by Sleator
 
   use Lingua::LinkParser;
  
-  my $parser = new Lingua::LinkParser;
+  our $parser = new Lingua::LinkParser;
   my $sentence = $parser->parse_sentence("This is the turning point.");
   my @linkages = $parser->get_linkages($sentence);
   foreach $linkage (@linkages) {
@@ -29,19 +36,17 @@ Lingua::LinkParser - Perl module implementing the Link Grammar Parser by Sleator
 
 To quote the Link Grammar documentation, "the Link Grammar Parser is a syntactic parser of English, based on link grammar, an original theory of English syntax. Given a sentence, the system assigns to it a syntactic structure, which consists of set of labeled links connecting pairs of words."
 
-This module provides acccess to the parser API using Perl objects to easily analyze linkages. The module organizes data returned from the parser API into an object hierarchy consisting of, in order, sentence, linkage, sublinkage, and link. If this is unclear to you, see the several examples in the 'eg/' directory for a jumpstart on using these objects.
+This module provides acccess to the parser API using Perl objects to easily analyze linkages. The module organizes data returned from the parser API into an object hierarchy consisting of, in order, sentence, linkage, sublinkage, and link. If this is unclear to you, see the several examples in the 'eg/' directory for a jumpstart on using these objects. The current Lingua::LinkParser module is based on version 4.0 of the Link Grammar parser API.
 
-The objects within this module should not be confused with the types familiar to users of the Link Parser API. The objects used in this module reorganize the API data in a way more usable and friendly to Perl users, and do not exactly represent the types used in the API.
+The objects within this module should not be confused with the types familiar to users of the Link Parser API. The objects used in this module reorganize the API data in a way more usable and friendly to Perl users, and do not exactly represent the types used in the API. For example, an object of class "Lingua::LinkParser::sentence" does not directly correspond to the struct type "Sentence" of the API; rather, it is a Perl object that provides methods to access the underlying API functions.
 
-This documentation must be supplemented with the extensive texts included with the Link Parser and on the Link Parser web site.
+This documentation should be supplemented with the extensive texts included with the Link Parser and on the Link Parser web site in order to understand its vernacular and general usage. A new module, Lingua::LinkParser::Definitions stores the link type documentation, and allows in-program retrieval of this information.
 
 =over
 
-=item $parser = new Lingua::LinkParser(DICT_PATH,KNOWLEDGE_PATH)
+=item $parser = new Lingua::LinkParser(DictFile => 'PATH', KnowFile => 'PATH', ConstFile => 'PATH', AffixFile => 'PATH')
 
-This returns a new Lingua::LinkParser object, loads the specified dictionary
-files, and sets basic configuration. If no dictionary files are specified, the
-parser will attempt to open the default files specified in the header files.
+This returns a new Lingua::LinkParser object, loads the specified dictionary files, and sets basic configuration. If no dictionary files are specified, the parser will attempt to load the files using the path in global $DATA_DIR. This is a change from the Link Parser 3.0 implementation, where defaults were stored in the C API. The hash passed may also contain keys equivalent to the link parser options, in order to set these before a parser object is returned. These options are all lower case, and listed later in this document.
 
 =item $parser->opts(OPTION_NAME,OPTION_VALUE)
 
@@ -53,9 +58,33 @@ in the Link Parser distribution documentation.
 
 Creates and assigns a sentence object (Lingua::LinkParser::Sentence) using the supplied value. This object is used in subsequent creation and analysis of linkages.
 
+=item $sentence->length
+
+Returns the number of words in the tokenized sentence, including the boundary words and punctuation.
+
 =item $sentence->num_linkages
 
 Returns the number of linkages found for $sentence.
+
+=item $sentence->num_valid_linkages
+
+Returns the number of valid linkages for $sentence
+
+=item $sentence->num_linkages_post_processed
+
+Returns the number of linkages that were post-processed.
+
+=item $sentence->null_count
+
+Returns the number of null links used in parsing the sentence.
+
+=item $sentence->num_violations
+
+Returns the number of post processing violations for $sentence.
+
+=item $sentence->get_word(NUM)
+
+Returns the word (with original spelling) at position NUM.
 
 =item $linkage = $sentence->linkage(NUM)
 
@@ -65,9 +94,21 @@ Assigns a linkage object (Lingua::LinkParser::Linkage) for linkage NUM of senten
 
 Assigns a list of linkage objects for all linkages of $sentence.
 
+=item $linkage->num_words
+
+Returns the number of words within $linkage.
+
+=item $linkage->get_words
+
+Returns a list of words within $linkage
+
 =item $linkage->num_sublinkages
 
 Returns the number of sublinkages for linkage $linkage.
+
+=item $linkage->violation_name
+
+Returns the name of a rule violated by post-processing of the linkage.
 
 =item $sublinkage = $linkage->sublinkage(NUM)
 
@@ -76,6 +117,10 @@ Assigns a sublinkage object (Lingua::LinkParser::Linkage::Sublinkage) for sublin
 =item @sublinkages = $linkage->sublinkages
 
 Assigns an array of sublinkage objects.
+
+=item $sublinkage->get_word(NUM)
+
+Returns the word for the sublinkage at position NUM.
 
 =item $sublinkage->num_links
 
@@ -90,9 +135,13 @@ $sublinkage.
 
 Assigns an array of link objects.
 
-=item $link->length
+=item $link->num_domains
 
-Returns the number of words spanned by $link.
+Returns the number of domains for the sublinkage.
+
+=item $link->domain_names
+
+Returns a list of the domain names for $link.
 
 =item $link->label
 
@@ -118,13 +167,17 @@ Returns the number of the right word for $link.
 
 Returns an ASCII pretty-printed diagram of the specified linkage or sublinkage.
 
-=item $parser->get_postscript($linkage)
+=item $parser->get_postscript($linkage, MODE)
 
 Returns Postscript code for a diagram of the specified linkage or sublinkage.
 
 =item $parser->get_domains($linkage)
 
 Returns formatted ASCII text showing the links and domains for the specified linkage or sublinkage.
+
+=item $parser->print_constituent_tree($linkage, MODE)
+
+Returns an ASCII formatted tree displaying the constituent parse tree for $linkage. MODE is an integer with the following meanings: '1' will display the tree using a nested Lisp format, '2' specifies that a flat tree is displayed with brackets, and '0' results in no structure, a null string being returned.
 
 =back
 
@@ -138,16 +191,15 @@ A few high-level functions have also been provided.
 =item @bigstruct = $sentence->get_bigstruct
  
 
-Assigns a potentially large data structure merging all linkages/sublinkages/links for $sentence. This structure is an array of hashes, with a single array entry for each word in the sentence. This function is only useful for high-level analysis of sentence grammar; most applications should be served by using the below functions.
+Assigns a potentially large data structure merging all linkages/sublinkages/links for $sentence. This structure is an array of hashes, with a single array entry for each word in the sentence. This function is only useful for high-level analysis of sentence grammar; most applications should be served by using the above functions.
  
 This array has the following structure:
 
  @bigstruct ( %{ 'word'  => 'WORD',
-                'links' => %{
+                 'links' => %{
                     'LINKTYPE_LINKAGENUM' => 'TARGETWORDNUM',...
                  },
-                }, ...
-             }
+                }
            , ...);
 
 Where LINKAGENUM is the number of the linkage for $sentence, and LINKTYPE is the link type label. TARGETWORDNUM is the number of the word to which each link connects.
@@ -157,16 +209,40 @@ get_bigstruct() can be useful in finding, for example, all links for a given wor
    $sentence = $parser->create_sentence(
         "Architecture is present in nearly every civilized society.");
    @bigstruct = $sentence->get_bigstruct;
-   while (($k,$v) = each %{$bigstruct[6]->{links}} )
-        { print "$k => ", $bigstruct[$v]->{word}, "\n"; }
- 
+
+   print "\nword 8: ", $bigstruct[8]->{word}, "\n";
+
+   while (($k,$v) = each %{$bigstruct[8]->{links}} )
+        { print " $k => ", $bigstruct[$v]->{word}, "\n"; }
+
 This would output:
  
-    A => civilized.a
-    Jp => in
+   word 8: society.n
     Dsu => every.d
+    Jp => in
+    A => civilized.a
  
 Signifying that for word "society", links are found of type A (pre-noun adjective) with "civilized" (tagged 'a' for adjective), type Jp (preposition to object) with "in", and type Dsu (noun determiner, singular-mass) with word "every", which is tagged 'd' for determiner.
+
+The following example adds the usage of a Lingua::LinkParser::Definitions object to display the link definitions along with the link types. Note that this is an optional module, and is only really useful for human-readable display:
+
+   use Lingua::LinkParser::Definitions qw(define);
+
+   $sentence = $parser->create_sentence(
+        "Architecture is present in nearly every civilized society.");
+   @bigstruct = $sentence->get_bigstruct;
+
+   print "\nword $i: ", $bigstruct[$i]->{word}, "\n";
+
+   while (($k,$v) = each %{$bigstruct[$i]->{links}} )
+        { print " $k => ", $bigstruct[$v]->{word}, " (", define($k), ")\n"; }
+
+Yielding:
+
+   word 8: society.n
+    Dsu => every.d (D connects determiners to nouns: "THE DOG chased A CAT and SOME BIRDS".  )
+    Jp => in (J connects prepositions to their objects: "The man WITH the HAT is here".  )
+    A => civilized.a (A connects pre-noun ("attributive") adjectives to following nouns: "The BIG DOG chased me", "The BIG BLACK UGLY DOG chased me".)
 
 =back
 
@@ -176,7 +252,7 @@ The following list of options may be set or retrieved with Lingua::LinkParser ob
 
     $parser->opts(OPTION, [VALUE])
 
-Supplying no VALUE returns the current value for OPTION. Note that not all of the options are implemented by the API, and instead are intended for use by the program.
+Supplying no VALUE returns the current value for OPTION. Note that not all of the options are implemented by the API, and instead are intended for use by the program. A more complete list of these options may be found in the parser documentation.
 
  verbosity
   The level of detail reported during processing, 0 reports nothing.
@@ -229,13 +305,11 @@ Supplying no VALUE returns the current value for OPTION. Note that not all of th
 
 =head1 BUGS/TODO
 
-- I suspect the docs are lacking. This is a very-beta release. Please supply me with input as to the accuracy and any bugs or enhancements you may have.
-
 - Add domain functions
 
 =head1 AUTHOR
 
-Daniel Brian, dbrian@clockwork.net
+Daniel Brian, dbrian@brians.org
 
 =head1 SEE ALSO
 
@@ -244,330 +318,33 @@ http://www.link.cs.cmu.edu/link/.
 
 =cut
 
-{
-  package Lingua::LinkParser::Linkage;
-  use strict;
-
   sub new {
     my $class = shift;
-    my $index = shift;
-    my $sent = shift;
-    my $opts = shift;
-    my $self = {};
-    bless $self, $class;
-    $self->{linkage} =  Lingua::LinkParser::linkage_create
-        ($index-1,$sent,$opts);
-    return $self;
-  }
-
-  sub num_sublinkages {
-    my $self = shift;
-    return Lingua::LinkParser::linkage_get_num_sublinkages($self->{linkage}); 
-  }
-
-  sub sublinkage {
-    my $self = shift;
-    my $index = shift;
-    my $sublinkage = Lingua::LinkParser::Linkage::Sublinkage->new($index,$self->{linkage});
-    return $sublinkage;
-  }
-
-  sub sublinkages {
-    my $self = shift;
-    my @sublinkages;
-    my $i;
-    for $i (0 .. ($self->num_sublinkages - 1)) {
-      push(@sublinkages,Lingua::LinkParser::Linkage::Sublinkage->new($i,$self->{linkage}));
-    }
-    @sublinkages;
-  }
-
-  sub compute_union {
-    my $self = shift;
-    Lingua::LinkParser::linkage_compute_union($self->{linkage});
-  }
-
-  sub num_words {
-    my $self = shift;
-    return Lingua::LinkParser::linkage_get_num_words($self->{linkage});
-  }
-
-  sub close {
-      my $self = shift;
-      $self->DESTROY(); 
-  }
-  
-  sub DESTROY {
-      my $self = shift;
-      Lingua::LinkParser::linkage_delete($self->{linkage});
-      undef $self;
-  }
-
-  {
-    package Lingua::LinkParser::Linkage::Sublinkage;
-    use strict;
-
-    sub new {
-        my $class = shift;
-        my $index = shift;
-        my $linkage = shift;
-        my $self = {};
-        bless $self, $class;
-        $self->{index} = $index;
-        $self->{linkage} = $linkage;
-        return $self;
-      }
-
-    sub num_links {
-        my $self = shift;
-        Lingua::LinkParser::linkage_set_current_sublinkage 
-            ($self->{linkage},$self->{index}-1);
-        return Lingua::LinkParser::linkage_get_num_links($self->{linkage}); 
-      }
-
-    sub link {
-        my $self = shift;
-        my $index = shift;
-        my $link = Lingua::LinkParser::Linkage::Sublinkage::Link->new($index,$self->{index},$self->{linkage});
-        return $link;
-    }
-
-    sub links {
-        my $self = shift;
-        my @links;
-        my $i;
-        for $i (0 .. ($self->num_links - 1)) {
-            push(@links, Lingua::LinkParser::Linkage::Sublinkage::Link->new($i,$self->{index},$self->{linkage}));
-        }
-        return @links;
-    }
-
-    sub violation_name {
-        my $self = shift;
-        Lingua::LinkParser::linkage_set_current_sublinkage($self->{linkage}, $self->{index});
-        return Lingua::LinkParser::linkage_get_violation_name($self->{linkage});
-    }
-
-    sub get_word {
-        my $self = shift;
-        my $index = shift;
-        Lingua::LinkParser::linkage_set_current_sublinkage($self->{linkage}, $self->{index});
-        return Lingua::LinkParser::linkage_get_word($self->{linkage},$index); 
-    }
-
-    sub num_words {
-        my $self = shift;
-        return Lingua::LinkParser::linkage_get_num_words($self->{linkage});
-    } 
-
-    sub close {
-        my $self = shift;
-        $self->DESTROY();
-    }
- 
-    sub DESTROY {
-        my $self = shift;
-        undef $self;
-    }
-
-    {
-      package Lingua::LinkParser::Linkage::Sublinkage::Link;
-      use strict;
-
-      sub new {
-          my $class = shift;
-          my $index = shift;
-          my $subindex = shift;
-          my $linkage = shift;
-          my $self = {};
-          bless $self, $class;
-          $self->{index} = $index;
-          $self->{subindex} = $subindex;
-          $self->{linkage} = $linkage;
-          return $self; 
-      }
-
-      sub length {
-          my $self = shift;
-          Lingua::LinkParser::linkage_set_current_sublinkage($self->{linkage}, $self->{subindex});
-          return Lingua::LinkParser::linkage_get_link_length($self->{linkage}, $self->{index});
-      }
-
-      sub lword {
-          my $self = shift;
-          Lingua::LinkParser::linkage_set_current_sublinkage($self->{linkage}, $self->{subindex});
-          return Lingua::LinkParser::linkage_get_link_lword($self->{linkage}, $self->{index});
-      }
-
-      sub rword {
-          my $self = shift;
-          Lingua::LinkParser::linkage_set_current_sublinkage($self->{linkage}, $self->{subindex});
-          return Lingua::LinkParser::linkage_get_link_rword($self->{linkage}, $self->{index});
-      }
-
-      sub label {
-          my $self = shift;
-          Lingua::LinkParser::linkage_set_current_sublinkage($self->{linkage}, $self->{subindex});
-          return Lingua::LinkParser::linkage_get_link_label($self->{linkage}, $self->{index});
-      }
-
-      sub llabel {
-          my $self = shift;
-          Lingua::LinkParser::linkage_set_current_sublinkage($self->{linkage}, $self->{subindex});
-          return Lingua::LinkParser::linkage_get_link_llabel($self->{linkage}, $self->{index});
-      }
-
-      sub rlabel {
-          my $self = shift;
-          Lingua::LinkParser::linkage_set_current_sublinkage($self->{linkage}, $self->{subindex});
-          return Lingua::LinkParser::linkage_get_link_rlabel($self->{linkage}, $self->{index});
-      }
-
-      sub num_domains {
-          my $self = shift;
-          Lingua::LinkParser::linkage_set_current_sublinkage($self->{linkage}, $self->{subindex});
-          return Lingua::LinkParser::linkage_get_link_num_domains($self->{linkage}, $self->{index});
-      }
-
-      sub domain_names {
-          my $self = shift;
-          Lingua::LinkParser::linkage_set_current_sublinkage($self->{linkage}, $self->{subindex});
-          return Lingua::LinkParser::linkage_get_link_domain_names($self->{linkage}, $self->{index});
-      }
-
-      sub close {
-          my $self = shift;
-          $self->DESTROY();
-      }
- 
-      sub DESTROY {
-          my $self = shift;
-          undef $self;
-      }
-
-    }
-  }
-}
-
-{
-  package Lingua::LinkParser::Sentence;
-  use strict;
-
-  sub new {
-      my $class = shift;
-      my $text = shift || "";
-      my $parser = shift;
-      my $self = {};
-      bless $self, $class;
-      $self->{sent} = Lingua::LinkParser::sentence_create($text,$parser->{dict});
-      $self->{opts} = $parser->{opts};
-      Lingua::LinkParser::sentence_parse($self->{sent}, $parser->{opts});
-      return $self;
-  }
-
-  sub null_count {
-      my $self = shift;
-      return Lingua::LinkParser::sentence_null_count
-          ($self->{sent});
-  }
-
-  sub num_linkages {
-      my $self = shift;
-      return Lingua::LinkParser::sentence_num_linkages_found
-          ($self->{sent});
-  }
-
-  sub num_valid_linkages {
-      my $self = shift;
-      return Lingua::LinkParser::sentence_num_valid_linkages
-          ($self->{sent});
-  }
-
-  sub num_linkages_post_processed {
-      my $self = shift;
-      return Lingua::LinkParser::sentence_num_linkages_post_processed
-          ($self->{sent});
-  }
- 
-  sub num_violations {
-      my $self = shift;
-      my $i = shift;
-      return Lingua::LinkParser::sentence_num_violations
-          ($self->{sent},$i);
-  }
- 
-  sub disjunct_cost {
-      my $self = shift;
-      my $i = shift;
-      return Lingua::LinkParser::sentence_num_linkages_post_processed
-          ($self->{sent},$i);
-  }
-
-  sub linkage {
-      my $self = shift;
-      my $index = shift;
-      my $_linkage = new Lingua::LinkParser::Linkage($index,$self->{sent},$self->{opts});
-      return $_linkage;
-  }
-
-  sub linkages {
-      my $self = shift;
-      my @linkages;
-      my $i;
-      for $i (1 .. $self->num_linkages) {
-          push(@linkages, new Lingua::LinkParser::Linkage($i,$self->{sent},$self->{opts}));
-      }
-      return @linkages;
-  }
-
-  sub get_word {
-      my $self = shift;
-      my $index = shift;
-      return Lingua::LinkParser::sentence_get_word($self->{sent},$index);
-  }
-
-  sub get_bigstruct {
-      my $self = shift;
-      my @bigstruct;
-      my $i;
-      my $link;
-      foreach ($self->linkages) {
-          $_->compute_union;
-          my $sublinkage = $_->sublinkage($_->num_sublinkages - 1);
-          for $i (0 .. ($sublinkage->num_words - 1)) {
-              $bigstruct[$i]->{word} = $sublinkage->get_word($i); 
-          }
-          foreach $link ($sublinkage->links) {
-              $bigstruct[$link->lword]->{links}->{$link->label} = $link->rword;
-              $bigstruct[$link->rword]->{links}->{$link->label} = $link->lword;
-          }
-      }
-      return @bigstruct;
-  }
-
-  sub close {
-      my $self = shift;
-      $self->DESTROY();
-  }
- 
-  sub DESTROY {
-      my $self = shift;
-      Lingua::LinkParser::sentence_delete($self->{sent});
-      undef $self;
-  }
-}
-
-sub new {
-    my $class = shift;
-    my ($dictpath,$pppath) = @_;
+    my %arg = @_;
+    $arg{DictFile}  ||= "$DATA_DIR/4.0.dict";
+    $arg{KnowFile}  ||= "$DATA_DIR/4.0.knowledge";
+    $arg{ConstFile} ||= "$DATA_DIR/4.0.constituent-knowledge";
+    $arg{AffixFile} ||= "$DATA_DIR/4.0.affix";
     my $self = {};
     bless $self, $class;
     $self->{opts} = parse_options_create();
-    $self->{dict} = dictionary_create($dictpath,$pppath);
+    foreach (keys %arg) {
+        if (/^[a-z]/) {
+            $self->opts($_ => $arg{$_});
+        }
+    }
+    $self->{dict} = dictionary_create($arg{DictFile},$arg{KnowFile},$arg{ConstFile},$arg{AffixFile});
+    unless ($self->{dict}) {
+        if (!-e $arg{DictFile}) { print "DictFile '$arg{DictFile}' not found\n"; }
+        if (!-e $arg{KnowFile}) { print "KnowFile '$arg{KnowFile}' not found\n"; }
+        if (!-e $arg{ConstFile}) { print "ConstFile '$arg{ConstFile}' not found\n"; }
+        if (!-e $arg{AffixFile}) { print "AffixFile '$arg{AffixFile}' not found\n"; }
+        croak "Dictionary creation failed";
+    }
     return $self;
-}
- 
-sub opts {
+  }
+
+  sub opts {
     my $self = shift;
     my ($option,$setting) = @_;
     my $return = "";
@@ -581,47 +358,56 @@ sub opts {
     }
     if ($@) { die $@; }
     $return;
-}
- 
-sub create_sentence {
+  }
+
+  sub create_sentence {
     my $self = shift;
     my $text = shift;
     my $sentence = new Lingua::LinkParser::Sentence($text,$self);
     return $sentence;
-}
- 
-sub get_diagram {
+  }
+
+  sub get_diagram {
     my $self = shift;
     my $linkage = shift;
     return linkage_print_diagram($linkage->{linkage});
-}
- 
-sub get_postscript {
+  }
+
+  sub get_postscript {
+    my $self    = shift;
+    my $linkage = shift;
+    my $mode    = shift || 0;
+    return linkage_print_postscript($linkage->{linkage}, $mode);
+  }
+
+  sub print_constituent_tree {
     my $self = shift;
     my $linkage = shift;
-    return linkage_print_postscript($linkage->{linkage});
-}
+    my $mode = shift;
+    return linkage_print_constituent_tree($linkage->{linkage},$mode);
+  }
 
-sub get_domains {
+  sub get_domains {
     my $self = shift;
     my $linkage = shift;
     return linkage_print_links_and_domains($linkage->{linkage});
-}
+  }
 
-sub DESTROY {
+  sub DESTROY {
     my $self = shift;
     dictionary_delete($self->{dict});
     parse_options_delete($self->{opts});
     $self = {};
-}
- 
-sub close {
+  }
+
+  sub close {
     my $self = shift;
     $self->DESTROY();
-}                                                                                                              
+  }
 
 bootstrap Lingua::LinkParser $VERSION;
 
-
 1;
+__END__
+
 

@@ -36,9 +36,11 @@ constant(sv,arg)
 
 
 Dictionary
-dictionary_create(name, post_process_file_name)
-	char *	name
-	char *	post_process_file_name
+dictionary_create(dict_name, pp_name, cons_name, affix_name)
+	char * dict_name
+	char * pp_name
+        char * cons_name
+        char * affix_name
 
 int
 dictionary_delete(dict)
@@ -70,10 +72,23 @@ int
 linkage_disjunct_cost(linkage)
 	Linkage	linkage
 
+void
+call_linkage_get_link_domain_names(linkage, index)
+        Linkage linkage
+        int     index
+    PREINIT:
+        int j;
+        char **names;
+    PPCODE:
+        names = linkage_get_link_domain_names(linkage, index);
+        for (j=0; j<linkage_get_link_num_domains(linkage, index); ++j) {
+            XPUSHs(newSVpv(names[j],0));
+        }
+
 char **
 linkage_get_link_domain_names(linkage, index)
-	Linkage	linkage
-	int	index
+        Linkage linkage
+        int     index
 
 char *
 linkage_get_link_label(linkage, index)
@@ -135,6 +150,18 @@ linkage_get_word(linkage, w)
 	Linkage	linkage
 	int	w
 
+void
+call_linkage_get_words(linkage)
+        Linkage linkage
+    PREINIT:
+        int j;
+        char **words;
+    PPCODE:
+        words = linkage_get_words(linkage);
+        for (j=0; j<linkage_get_num_words(linkage); ++j) {
+            XPUSHs(newSVpv(words[j],0));
+        }
+
 char **
 linkage_get_words(linkage)
 	Linkage	linkage
@@ -167,6 +194,11 @@ linkage_print_diagram(linkage)
 char *
 linkage_print_links_and_domains(linkage)
 	Linkage	linkage
+
+char * 
+linkage_print_constituent_tree(linkage, mode)
+        Linkage linkage
+        int     mode
 
 char *
 linkage_print_postscript(linkage, mode)
@@ -465,3 +497,4 @@ int
 sentence_parse(sent, opts)
 	Sentence	sent
 	Parse_Options	opts
+

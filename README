@@ -1,9 +1,10 @@
+  ==================================================================
   Lingua::LinkParser 1.0
-  Copyright 2000, Dan Brian
-  All rights reserved.
+  Copyright 2000 by Dan Brian
 
   This program is free software; you can redistribute it and/or modify
   it under the same terms as Perl itself.
+  ==================================================================
 
 Description
 
@@ -11,7 +12,8 @@ Description
    is a syntactic parser of English, based on link grammar, an original 
    theory of English syntax. Given a sentence, the system assigns to it 
    a syntactic structure, which consists of set of labeled links 
-   connecting pairs of words."
+   connecting pairs of words." Version 1.0 of this module implements the 
+   new 4.0 parser API.
 
 Requirements
 
@@ -19,8 +21,9 @@ Requirements
    compiled and install the Link Parser package from 
    http://www.link.cs.cmu.edu/link/.
 
-   This module has been compiled and tested with Perl 5.005_03 on 
-   Linux 2.2.13.
+   This module has been compiled and tested with Perl 5.6 on Linux 
+   2.2.13 & 2.2.14. Any incompatibilities *should* be the result of lib
+   issues within the Link Parser itself, but these seem very stable.
 
 Installation
 
@@ -36,6 +39,9 @@ Installation
 
       make
       make test
+
+   On Linux, the make displays several warnings about redefined macros -
+   these messages may be ignored.
 
    The test will load the parser dictionary files and parse a sample 
    sentence. If they do not, back up and figure out why before 
@@ -56,7 +62,10 @@ Documentation
 
 Todo
 
-   Documentation is lacking for many functions, and not all of the API
-   functions have corresponding Perl entries. Help!
+   I have not added access to the CNode data structure returned by 
+   the constituent_tree functions. I will, if requested.
 
+Author
+
+   Dan Brian <dbrian@brians.org>
 
