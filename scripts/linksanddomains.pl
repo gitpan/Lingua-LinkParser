@@ -12,7 +12,6 @@ $sentence = $parser->create_sentence("We met in New York.");
 print "linkages: ", $sentence->num_linkages, "\n";
 
 for $i (1 .. $sentence->num_linkages) {
-    print $i, ": ", $parser->get_diagram($sentence->linkage($i)), "\n";
+    print $i, ": ", $parser->get_domains($sentence->linkage($i),2), "\n";
 }
-
 

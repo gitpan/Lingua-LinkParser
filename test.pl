@@ -6,7 +6,7 @@
 # Change 1..1 below to 1..last_test_to_print .
 # (It may become useful if the test is moved to ./t subdirectory.)
 
-BEGIN { $| = 1; print "1..14\n"; }
+BEGIN { $| = 1; print "1..15\n"; }
 END {print "not ok 1\n" unless $loaded;}
 use Lingua::LinkParser;
 $loaded = 1;
@@ -74,4 +74,6 @@ if ($parser->print_constituent_tree($linkage,1) =~
 if ($linkage->num_links > 0) { print "ok 14\n"; } else 
                              { print "not ok 14\n"; }
 
+if ($linkage->words > 0) { print "ok 15\n"; } else 
+                         { print "not ok 15\n"; }
 

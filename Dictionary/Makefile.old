@@ -1,4 +1,4 @@
-# This Makefile is for the Lingua::LinkParser::Definitions extension to perl.
+# This Makefile is for the Lingua::LinkParser::Dictionary extension to perl.
 #
 # It was generated automatically by MakeMaker version
 # 5.45 (Revision: 1.222) from the contents of
@@ -10,8 +10,8 @@
 #
 #   MakeMaker Parameters:
 
-#	NAME => q[Lingua::LinkParser::Definitions]
-#	VERSION_FROM => q[Definitions.pm]
+#	NAME => q[Lingua::LinkParser::Dictionary]
+#	VERSION_FROM => q[Dictionary.pm]
 
 # --- MakeMaker post_initialize section:
 
@@ -43,12 +43,12 @@ FULL_AR = /usr/bin/ar
 
 # --- MakeMaker constants section:
 AR_STATIC_ARGS = cr
-NAME = Lingua::LinkParser::Definitions
-DISTNAME = Lingua-LinkParser-Definitions
-NAME_SYM = Lingua_LinkParser_Definitions
-VERSION = 1.0
-VERSION_SYM = 1_0
-XS_VERSION = 1.0
+NAME = Lingua::LinkParser::Dictionary
+DISTNAME = Lingua-LinkParser-Dictionary
+NAME_SYM = Lingua_LinkParser_Dictionary
+VERSION = 1.01
+VERSION_SYM = 1_01
+XS_VERSION = 1.01
 INST_BIN = ../blib/bin
 INST_EXE = ../blib/script
 INST_LIB = ../blib/lib
@@ -89,11 +89,11 @@ MM_VERSION = 5.45
 # ROOTEXT = Directory part of FULLEXT with leading slash (eg /DBD)  !!! Deprecated from MM 5.32  !!!
 # PARENT_NAME = NAME without BASEEXT and no trailing :: (eg Foo::Bar)
 # DLBASE  = Basename part of dynamic library. May be just equal BASEEXT.
-FULLEXT = Lingua/LinkParser/Definitions
-BASEEXT = Definitions
+FULLEXT = Lingua/LinkParser/Dictionary
+BASEEXT = Dictionary
 PARENT_NAME = Lingua::LinkParser
 DLBASE = $(BASEEXT)
-VERSION_FROM = Definitions.pm
+VERSION_FROM = Dictionary.pm
 OBJECT = 
 LDFROM = $(OBJECT)
 LINKTYPE = dynamic
@@ -106,7 +106,7 @@ H_FILES =
 HTMLLIBPODS    = 
 HTMLSCRIPTPODS = 
 MAN1PODS = 
-MAN3PODS = Definitions.pm
+MAN3PODS = 
 HTMLEXT = html
 INST_MAN1DIR = ../blib/man1
 INSTALLMAN1DIR = $(PREFIX)/man/man1
@@ -148,10 +148,10 @@ EXPORT_LIST =
 
 PERL_ARCHIVE = 
 
-TO_INST_PM = Definitions.pm
+TO_INST_PM = Dictionary.pm
 
-PM_TO_BLIB = Definitions.pm \
-	$(INST_LIBDIR)/Definitions.pm
+PM_TO_BLIB = Dictionary.pm \
+	$(INST_LIBDIR)/Dictionary.pm
 
 
 # --- MakeMaker tool_autosplit section:
@@ -267,16 +267,6 @@ $(INST_ARCHAUTODIR)/.exists :: /usr/local/lib/perl5/5.6.0/i686-linux/CORE/perl.h
 
 	-@$(CHMOD) $(PERM_RWX) $(INST_ARCHAUTODIR)
 
-config :: $(INST_MAN3DIR)/.exists
-	@$(NOOP)
-
-
-$(INST_MAN3DIR)/.exists :: /usr/local/lib/perl5/5.6.0/i686-linux/CORE/perl.h
-	@$(MKPATH) $(INST_MAN3DIR)
-	@$(EQUALIZE_TIMESTAMP) /usr/local/lib/perl5/5.6.0/i686-linux/CORE/perl.h $(INST_MAN3DIR)/.exists
-
-	-@$(CHMOD) $(PERM_RWX) $(INST_MAN3DIR)
-
 help:
 	perldoc ExtUtils::MakeMaker
 
@@ -331,17 +321,10 @@ htmlifypods : pure_all
 
 
 # --- MakeMaker manifypods section:
-POD2MAN_EXE = /usr/local/bin/pod2man
-POD2MAN = $(PERL) -we '%m=@ARGV;for (keys %m){' \
--e 'next if -e $$m{$$_} && -M $$m{$$_} < -M $$_ && -M $$m{$$_} < -M "Makefile";' \
--e 'print "Manifying $$m{$$_}\n";' \
--e 'system(qq[$$^X ].q["-I$(PERL_ARCHLIB)" "-I$(PERL_LIB)" $(POD2MAN_EXE) ].qq[$$_>$$m{$$_}])==0 or warn "Couldn\047t install $$m{$$_}\n";' \
--e 'chmod(oct($(PERM_RW))), $$m{$$_} or warn "chmod $(PERM_RW) $$m{$$_}: $$!\n";}'
 
-manifypods : pure_all Definitions.pm
-	@$(POD2MAN) \
-	Definitions.pm \
-	$(INST_MAN3DIR)/Lingua::LinkParser::Definitions.$(MAN3EXT)
+manifypods : pure_all
+	@$(NOOP)
+
 
 # --- MakeMaker processPL section:
 
@@ -368,7 +351,7 @@ clean ::
 # Delete temporary files (via clean) and also delete installed files
 realclean purge ::  clean
 	rm -rf $(INST_AUTODIR) $(INST_ARCHAUTODIR)
-	rm -f $(INST_LIBDIR)/Definitions.pm
+	rm -f $(INST_LIBDIR)/Dictionary.pm
 	rm -rf Makefile Makefile.old
 
 
@@ -448,7 +431,7 @@ testdb_static :: testdb_dynamic
 # --- MakeMaker ppd section:
 # Creates a PPD (Perl Package Description) for a binary distribution.
 ppd:
-	@$(PERL) -e "print qq{<SOFTPKG NAME=\"Lingua-LinkParser-Definitions\" VERSION=\"1,0,0,0\">\n}. qq{\t<TITLE>Lingua-LinkParser-Definitions</TITLE>\n}. qq{\t<ABSTRACT></ABSTRACT>\n}. qq{\t<AUTHOR></AUTHOR>\n}. qq{\t<IMPLEMENTATION>\n}. qq{\t\t<OS NAME=\"$(OSNAME)\" />\n}. qq{\t\t<ARCHITECTURE NAME=\"i686-linux\" />\n}. qq{\t\t<CODEBASE HREF=\"\" />\n}. qq{\t</IMPLEMENTATION>\n}. qq{</SOFTPKG>\n}" > Lingua-LinkParser-Definitions.ppd
+	@$(PERL) -e "print qq{<SOFTPKG NAME=\"Lingua-LinkParser-Dictionary\" VERSION=\"1,01,0,0\">\n}. qq{\t<TITLE>Lingua-LinkParser-Dictionary</TITLE>\n}. qq{\t<ABSTRACT></ABSTRACT>\n}. qq{\t<AUTHOR></AUTHOR>\n}. qq{\t<IMPLEMENTATION>\n}. qq{\t\t<OS NAME=\"$(OSNAME)\" />\n}. qq{\t\t<ARCHITECTURE NAME=\"i686-linux\" />\n}. qq{\t\t<CODEBASE HREF=\"\" />\n}. qq{\t</IMPLEMENTATION>\n}. qq{</SOFTPKG>\n}" > Lingua-LinkParser-Dictionary.ppd
 
 # --- MakeMaker pm_to_blib section:
 

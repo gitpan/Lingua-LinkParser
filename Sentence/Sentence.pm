@@ -4,68 +4,69 @@
   use Lingua::LinkParser::Linkage;
   use overload '""' => "as_string";
 
-  our $VERSION = "1.0";
+  our $VERSION = '1.01';
 
   sub new {
       my $class = shift;
       my $text = shift || "";
       my $parser = shift;
-      my $self = {};
-      bless $self, $class;
-      $self->{sent} = Lingua::LinkParser::sentence_create($text,$parser->{dict});
-      $self->{opts} = $parser->{opts};
-      Lingua::LinkParser::sentence_parse($self->{sent}, $parser->{opts});
+      my $self = bless {
+          _sent => Lingua::LinkParser::sentence_create($text,$parser->dict),
+          _opts => $parser->opts,
+          _text => $text
+      };
+      $self->{_num_linkages} = Lingua::LinkParser::sentence_parse($self->sent, $parser->opts);
       return $self;
   }
 
+  sub sent { $_[0]->{_sent} }
+  sub opts { $_[0]->{_opts} }
+
   sub as_string {
       my $self = shift;
-      my $_linkage = new Lingua::LinkParser::Linkage(1, $self->{sent}, $self->{opts});
-      Lingua::LinkParser::get_diagram($_linkage);
+      $self->{_text};
   }
 
   sub null_count {
       my $self = shift;
       return Lingua::LinkParser::sentence_null_count
-          ($self->{sent});
+          ($self->sent);
   }
 
   sub num_linkages {
-      my $self = shift;
-      return Lingua::LinkParser::sentence_num_linkages_found
-          ($self->{sent});
+      $_[0]->{_num_linkages};
   }
 
   sub num_valid_linkages {
       my $self = shift;
       return Lingua::LinkParser::sentence_num_valid_linkages
-          ($self->{sent});
+          ($self->sent);
   }
 
   sub num_linkages_post_processed {
       my $self = shift;
       return Lingua::LinkParser::sentence_num_linkages_post_processed
-          ($self->{sent});
+          ($self->sent);
   }
 
   sub num_violations {
       my $self = shift;
       my $i = shift;
       return Lingua::LinkParser::sentence_num_violations
-          ($self->{sent},$i);
+          ($self->sent,$i);
   }
 
   sub disjunct_cost {
       my $self = shift;
       my $i = shift;
       return Lingua::LinkParser::sentence_num_linkages_post_processed
-          ($self->{sent},$i);
+          ($self->sent,$i);
   }
 
   sub linkage {
       my $self = shift;
       my $index = shift;
-      my $_linkage = new Lingua::LinkParser::Linkage($index,$self->{sent},$self->{opts});
+      my $_linkage = new Lingua::LinkParser::Linkage($index,$self->sent,$self->opts);
       return $_linkage;
   }
 
@@ -74,7 +75,7 @@
       my @linkages;
       my $i;
       for $i (1 .. $self->num_linkages) {
-          push(@linkages, new Lingua::LinkParser::Linkage($i,$self->{sent},$self->{opts}));
+          push(@linkages, new Lingua::LinkParser::Linkage($i,$self->sent,$self->opts));
       }
       return @linkages;
   }
@@ -82,7 +83,7 @@
   sub get_word {
       my $self = shift;
       my $index = shift;
-      return Lingua::LinkParser::sentence_get_word($self->{sent},$index);
+      return Lingua::LinkParser::sentence_get_word($self->sent,$index);
   }
 
   sub get_bigstruct {
@@ -104,16 +105,15 @@
       return @bigstruct;
   }
 
-  sub close {
-      my $self = shift;
-      $self->DESTROY();
-  }
+  #sub close {
+  #    my $self = shift;
+  #    $self->DESTROY();
+  #}
 
-  sub DESTROY {
-      my $self = shift;
-      Lingua::LinkParser::sentence_delete($self->{sent});
-      undef $self;
-  }
+  #sub DESTROY {
+  #    my $self = shift;
+  #    Lingua::LinkParser::sentence_delete($self->sent);
+  #}
 
 1;
 

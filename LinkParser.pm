@@ -5,14 +5,13 @@ use strict;
 use Carp;
 use Lingua::LinkParser::Sentence;
 use Lingua::LinkParser::Linkage;
-use Lingua::LinkParser::Linkage::Sublinkage;
-use Lingua::LinkParser::Linkage::Sublinkage::Link;
+use Lingua::LinkParser::Dictionary;
 
 require Exporter;
 require DynaLoader;
 
-our @ISA = qw(Exporter DynaLoader);
-our $VERSION = '1.0';
+our @ISA = qw(DynaLoader);
+our $VERSION = '1.01';
 
 # this global stores the directory path for the Link Grammar data
 our $DATA_DIR='/home/garron/system-4.0/link-4.0/data';
@@ -26,8 +25,8 @@ Lingua::LinkParser - Perl module implementing the Link Grammar Parser by Sleator
   use Lingua::LinkParser;
  
   our $parser = new Lingua::LinkParser;
-  my $sentence = $parser->parse_sentence("This is the turning point.");
-  my @linkages = $parser->get_linkages($sentence);
+  my $sentence = $parser->create_sentence("This is the turning point.");
+  my @linkages = $parser->linkages($sentence);
   foreach $linkage (@linkages) {
       print ($parser->get_diagram($linkage));
   }
@@ -102,9 +101,17 @@ Returns the number of words within $linkage.
 
 Returns a list of words within $linkage
 
+=item $linkage->words
+
+Returns a list of ::Word objects for $linkage.
+
 =item $linkage->num_sublinkages
 
 Returns the number of sublinkages for linkage $linkage.
+
+=item $linkage->compute_union
+
+Combines the sublinkages for $linkage into one, possibly with crossing links.
 
 =item $linkage->violation_name
 
@@ -122,9 +129,25 @@ Assigns an array of sublinkage objects.
 
 Returns the word for the sublinkage at position NUM.
 
+=item $sublinkage->words
+
+Returns a list of ::Word objects for $sublinkage.
+
 =item $sublinkage->num_links
 
 Returns the number of links for sublinkage $sublinkage.
+
+=item $word->text
+
+Returns the post-parse word text.
+
+=item $word->position
+
+Returns the number for the word's position in a sentence.
+
+=item @links = $word->links
+
+Returns a list of link objects for the word.
 
 =item $link = $sublinkage->link(NUM)
 
@@ -162,6 +185,22 @@ Returns the number of the left word for $link.
 =item $link->rword
 
 Returns the number of the right word for $link.
+
+=item $link->length
+
+Returns the length of the link.
+
+=item $link->linklabel
+
+Only for link objects created via a word object, this returns the label for the link from the word object that created it.
+
+=item $link->linkword
+
+Only for link objects created via a word object, this returns the word text which the link points *to* from the object that created it.
+
+=item $link->linkposition
+
+Only for link objects created via a word object, this returns the number of the word which the link points *to* from the object that created it.
 
 =item $parser->get_diagram($linkage)
 
@@ -325,16 +364,17 @@ http://www.link.cs.cmu.edu/link/.
     $arg{KnowFile}  ||= "$DATA_DIR/4.0.knowledge";
     $arg{ConstFile} ||= "$DATA_DIR/4.0.constituent-knowledge";
     $arg{AffixFile} ||= "$DATA_DIR/4.0.affix";
-    my $self = {};
-    bless $self, $class;
-    $self->{opts} = parse_options_create();
+    my $self = bless {
+            _opts => parse_options_create(),
+            _dict => dictionary_create( $arg{DictFile}, $arg{KnowFile}, 
+                      $arg{ConstFile}, $arg{AffixFile} )
+    };
     foreach (keys %arg) {
         if (/^[a-z]/) {
             $self->opts($_ => $arg{$_});
         }
     }
-    $self->{dict} = dictionary_create($arg{DictFile},$arg{KnowFile},$arg{ConstFile},$arg{AffixFile});
-    unless ($self->{dict}) {
+    unless ($self->dict) {
         if (!-e $arg{DictFile}) { print "DictFile '$arg{DictFile}' not found\n"; }
         if (!-e $arg{KnowFile}) { print "KnowFile '$arg{KnowFile}' not found\n"; }
         if (!-e $arg{ConstFile}) { print "ConstFile '$arg{ConstFile}' not found\n"; }
@@ -344,19 +384,21 @@ http://www.link.cs.cmu.edu/link/.
     return $self;
   }
 
+  sub dict { $_[0]->{_dict} }
+
   sub opts {
     my $self = shift;
     my ($option,$setting) = @_;
     my $return = "";
-    if (!defined $option) {
-        die "Lingua::LinkParser::opts must be called with an option.";
+    if (!$option) {
+        return $self->{_opts};
     }
     if (defined $setting) {
-        eval("Lingua::LinkParser::parse_options_set_$option(\$self->{opts},'$setting')");
+        eval("Lingua::LinkParser::parse_options_set_$option(\$self->opts,'$setting')");
     } else {
-        eval("\$return = Lingua::LinkParser::parse_options_get_$option(\$self->{opts})");
+        eval("\$return = Lingua::LinkParser::parse_options_get_$option(\$self->opts)");
     }
-    if ($@) { die $@; }
+    if ($@) { croak $@; }
     $return;
   }
 
@@ -364,39 +406,38 @@ http://www.link.cs.cmu.edu/link/.
     my $self = shift;
     my $text = shift;
     my $sentence = new Lingua::LinkParser::Sentence($text,$self);
-    return $sentence;
+    $sentence;
   }
 
   sub get_diagram {
     my $self = shift;
     my $linkage = shift;
-    return linkage_print_diagram($linkage->{linkage});
+    linkage_print_diagram($linkage->{linkage});
   }
 
   sub get_postscript {
     my $self    = shift;
     my $linkage = shift;
-    my $mode    = shift || 0;
-    return linkage_print_postscript($linkage->{linkage}, $mode);
+    my $mode    = shift;
+    $mode     ||= 0;
+    linkage_print_postscript($linkage->{linkage}, $mode);
   }
 
   sub print_constituent_tree {
     my $self = shift;
     my $linkage = shift;
     my $mode = shift;
-    return linkage_print_constituent_tree($linkage->{linkage},$mode);
+    linkage_print_constituent_tree($linkage->{linkage},$mode);
   }
 
   sub get_domains {
     my $self = shift;
     my $linkage = shift;
-    return linkage_print_links_and_domains($linkage->{linkage});
+    linkage_print_links_and_domains($linkage->{linkage});
   }
 
   sub DESTROY {
     my $self = shift;
-    dictionary_delete($self->{dict});
-    parse_options_delete($self->{opts});
     $self = {};
   }
 

@@ -12,6 +12,6 @@ $sentence = $parser->create_sentence("We met in New York.");
 print "linkages: ", $sentence->num_linkages, "\n";
 
 for $i (1 .. $sentence->num_linkages) {
-    print $i, ": ", $parser->print_constituent_tree($sentence->linkage($i),1), "\n";
+    print $i, ": ", $parser->print_constituent_tree($sentence->linkage($i),2), "\n";
 }
 

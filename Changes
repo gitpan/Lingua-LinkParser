@@ -37,3 +37,19 @@ Revision history for Perl extension Lingua::LinkParser.
     - Added the link functions that had previously only been available to 
       sublinkage objects to linkage objects.
 
+1.01  Wed Sep 2 12:35:01 2000
+
+    - Built and tested using Link Grammar 4.1
+    - Fixed bug that redefined 'get_word' and 'num_word' functions in
+      Linkage.pm.
+    - Moved Dictionary 'type' to its own namespace, 
+      Lingua::LinkParser::Dictionary.
+    - Removed DESTROY methods from ::Sublinkage and ::Linkage; the API
+      4.0 was crapping a log when invoked.
+    - Added a class 'Lingua::LinkParser::Linkage::Word' to allow word 
+      object creation and quick access to information for that word.
+    - Lots to fixes to ::Sublinkage to get index numbers right
+    - Lots of examples added to 'scripts/', including a grammar regex
+    - Added alternate methods for overloading ::Linkage and
+      ::Sublinkage, "new_as_string()", to experiment with grammar regex
+

@@ -11,10 +11,10 @@
 #   MakeMaker Parameters:
 
 #	DEFINE => q[]
-#	INC => q[-L/home/garron/system-4.0/link-4.0/obj -I/home/garron/system-4.0/link-4.0/include]
+#	INC => q[-L/home/garron/system-4.1/link-4.1/obj -I/home/garron/system-4.1/link-4.1/include]
 #	LIBS => q[]
 #	NAME => q[Lingua::LinkParser]
-#	OBJECT => q[LinkParser.o /home/garron/system-4.0/link-4.0/obj/analyze-linkage.o /home/garron/system-4.0/link-4.0/obj/and.o /home/garron/system-4.0/link-4.0/obj/api.o /home/garron/system-4.0/link-4.0/obj/build-disjuncts.o /home/garron/system-4.0/link-4.0/obj/command-line.o /home/garron/system-4.0/link-4.0/obj/constituents.o /home/garron/system-4.0/link-4.0/obj/count.o /home/garron/system-4.0/link-4.0/obj/error.o /home/garron/system-4.0/link-4.0/obj/extract-links.o /home/garron/system-4.0/link-4.0/obj/fast-match.o /home/garron/system-4.0/link-4.0/obj/idiom.o /home/garron/system-4.0/link-4.0/obj/linkset.o /home/garron/system-4.0/link-4.0/obj/massage.o /home/garron/system-4.0/link-4.0/obj/parse.o /home/garron/system-4.0/link-4.0/obj/post-process.o /home/garron/system-4.0/link-4.0/obj/pp_knowledge.o /home/garron/system-4.0/link-4.0/obj/pp_lexer.o /home/garron/system-4.0/link-4.0/obj/pp_linkset.o /home/garron/system-4.0/link-4.0/obj/preparation.o /home/garron/system-4.0/link-4.0/obj/print-util.o /home/garron/system-4.0/link-4.0/obj/print.o /home/garron/system-4.0/link-4.0/obj/prune.o /home/garron/system-4.0/link-4.0/obj/read-dict.o /home/garron/system-4.0/link-4.0/obj/resources.o /home/garron/system-4.0/link-4.0/obj/string-set.o /home/garron/system-4.0/link-4.0/obj/tokenize.o /home/garron/system-4.0/link-4.0/obj/utilities.o /home/garron/system-4.0/link-4.0/obj/word-file.o]
+#	OBJECT => q[LinkParser.o /home/garron/system-4.1/link-4.1/obj/analyze-linkage.o /home/garron/system-4.1/link-4.1/obj/and.o /home/garron/system-4.1/link-4.1/obj/api.o /home/garron/system-4.1/link-4.1/obj/build-disjuncts.o /home/garron/system-4.1/link-4.1/obj/command-line.o /home/garron/system-4.1/link-4.1/obj/constituents.o /home/garron/system-4.1/link-4.1/obj/count.o /home/garron/system-4.1/link-4.1/obj/error.o /home/garron/system-4.1/link-4.1/obj/extract-links.o /home/garron/system-4.1/link-4.1/obj/fast-match.o /home/garron/system-4.1/link-4.1/obj/idiom.o /home/garron/system-4.1/link-4.1/obj/linkset.o /home/garron/system-4.1/link-4.1/obj/massage.o /home/garron/system-4.1/link-4.1/obj/parse.o /home/garron/system-4.1/link-4.1/obj/post-process.o /home/garron/system-4.1/link-4.1/obj/pp_knowledge.o /home/garron/system-4.1/link-4.1/obj/pp_lexer.o /home/garron/system-4.1/link-4.1/obj/pp_linkset.o /home/garron/system-4.1/link-4.1/obj/preparation.o /home/garron/system-4.1/link-4.1/obj/print-util.o /home/garron/system-4.1/link-4.1/obj/print.o /home/garron/system-4.1/link-4.1/obj/prune.o /home/garron/system-4.1/link-4.1/obj/read-dict.o /home/garron/system-4.1/link-4.1/obj/resources.o /home/garron/system-4.1/link-4.1/obj/string-set.o /home/garron/system-4.1/link-4.1/obj/tokenize.o /home/garron/system-4.1/link-4.1/obj/utilities.o /home/garron/system-4.1/link-4.1/obj/word-file.o]
 #	VERSION_FROM => q[LinkParser.pm]
 
 # --- MakeMaker post_initialize section:
@@ -50,9 +50,9 @@ AR_STATIC_ARGS = cr
 NAME = Lingua::LinkParser
 DISTNAME = Lingua-LinkParser
 NAME_SYM = Lingua_LinkParser
-VERSION = 1.0
-VERSION_SYM = 1_0
-XS_VERSION = 1.0
+VERSION = 1.01
+VERSION_SYM = 1_01
+XS_VERSION = 1.01
 INST_BIN = blib/bin
 INST_EXE = blib/script
 INST_LIB = blib/lib
@@ -98,9 +98,9 @@ BASEEXT = LinkParser
 PARENT_NAME = Lingua
 DLBASE = $(BASEEXT)
 VERSION_FROM = LinkParser.pm
-INC = -L/home/garron/system-4.0/link-4.0/obj -I/home/garron/system-4.0/link-4.0/include
+INC = -L/home/garron/system-4.1/link-4.1/obj -I/home/garron/system-4.1/link-4.1/include
 DEFINE = 
-OBJECT = LinkParser$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/analyze-linkage$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/and$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/api$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/build-disjuncts$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/command-line$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/constituents$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/count$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/error$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/extract-links$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/fast-match$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/idiom$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/linkset$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/massage$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/parse$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/post-process$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/pp_knowledge$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/pp_lexer$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/pp_linkset$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/preparation$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/print-util$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/print$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/prune$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/read-dict$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/resources$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/string-set$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/tokenize$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/utilities$(OBJ_EXT) /home/garron/system-4.0/link-4.0/obj/word-file$(OBJ_EXT)
+OBJECT = LinkParser$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/analyze-linkage$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/and$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/api$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/build-disjuncts$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/command-line$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/constituents$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/count$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/error$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/extract-links$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/fast-match$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/idiom$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/linkset$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/massage$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/parse$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/post-process$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/pp_knowledge$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/pp_lexer$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/pp_linkset$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/preparation$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/print-util$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/print$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/prune$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/read-dict$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/resources$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/string-set$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/tokenize$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/utilities$(OBJ_EXT) /home/garron/system-4.1/link-4.1/obj/word-file$(OBJ_EXT)
 LDFROM = $(OBJECT)
 LINKTYPE = dynamic
 
@@ -482,6 +482,10 @@ subdirs ::
 
 
 subdirs ::
+	@cd Dictionary && $(MAKE) all $(PASTHRU)
+
+
+subdirs ::
 	@cd Linkage && $(MAKE) all $(PASTHRU)
 
 
@@ -497,6 +501,7 @@ subdirs ::
 
 clean ::
 	-cd Definitions && $(TEST_F) Makefile && $(MAKE) clean
+	-cd Dictionary && $(TEST_F) Makefile && $(MAKE) clean
 	-cd Linkage && $(TEST_F) Makefile && $(MAKE) clean
 	-cd Sentence && $(TEST_F) Makefile && $(MAKE) clean
 	-rm -rf LinkParser.c ./blib $(MAKE_APERL_FILE) $(INST_ARCHAUTODIR)/extralibs.all perlmain.c mon.out core core.*perl.*.? *perl.core so_locations pm_to_blib *~ */*~ */*/*~ *$(OBJ_EXT) *$(LIB_EXT) perl.exe $(BOOTSTRAP) $(BASEEXT).bso $(BASEEXT).def $(BASEEXT).exp
@@ -509,6 +514,8 @@ clean ::
 realclean purge ::  clean
 	-cd Definitions && $(TEST_F) Makefile.old && $(MAKE) -f Makefile.old realclean
 	-cd Definitions && $(TEST_F) Makefile && $(MAKE)  realclean
+	-cd Dictionary && $(TEST_F) Makefile.old && $(MAKE) -f Makefile.old realclean
+	-cd Dictionary && $(TEST_F) Makefile && $(MAKE)  realclean
 	-cd Linkage && $(TEST_F) Makefile.old && $(MAKE) -f Makefile.old realclean
 	-cd Linkage && $(TEST_F) Makefile && $(MAKE)  realclean
 	-cd Sentence && $(TEST_F) Makefile.old && $(MAKE) -f Makefile.old realclean
@@ -778,7 +785,7 @@ $(MAP_TARGET) :: static $(MAKE_APERL_FILE)
 $(MAKE_APERL_FILE) : $(FIRST_MAKEFILE)
 	@echo Writing \"$(MAKE_APERL_FILE)\" for this $(MAP_TARGET)
 	@$(PERL) -I$(INST_ARCHLIB) -I$(INST_LIB) -I$(PERL_ARCHLIB) -I$(PERL_LIB) \
-		Makefile.PL DIR=Definitions:Linkage:Sentence \
+		Makefile.PL DIR=Definitions:Dictionary:Linkage:Sentence \
 		MAKEFILE=$(MAKE_APERL_FILE) LINKTYPE=static \
 		MAKEAPERL=1 NORECURS=1 CCCDLFLAGS=
 
@@ -795,6 +802,7 @@ testdb :: testdb_$(LINKTYPE)
 
 test :: $(TEST_TYPE)
 	@cd Definitions && $(TEST_F) Makefile && $(MAKE) test $(PASTHRU)
+	@cd Dictionary && $(TEST_F) Makefile && $(MAKE) test $(PASTHRU)
 	@cd Linkage && $(TEST_F) Makefile && $(MAKE) test $(PASTHRU)
 	@cd Sentence && $(TEST_F) Makefile && $(MAKE) test $(PASTHRU)
 
@@ -817,7 +825,7 @@ testdb_static :: pure_all $(MAP_TARGET)
 # --- MakeMaker ppd section:
 # Creates a PPD (Perl Package Description) for a binary distribution.
 ppd:
-	@$(PERL) -e "print qq{<SOFTPKG NAME=\"Lingua-LinkParser\" VERSION=\"1,0,0,0\">\n}. qq{\t<TITLE>Lingua-LinkParser</TITLE>\n}. qq{\t<ABSTRACT></ABSTRACT>\n}. qq{\t<AUTHOR></AUTHOR>\n}. qq{\t<IMPLEMENTATION>\n}. qq{\t\t<OS NAME=\"$(OSNAME)\" />\n}. qq{\t\t<ARCHITECTURE NAME=\"i686-linux\" />\n}. qq{\t\t<CODEBASE HREF=\"\" />\n}. qq{\t</IMPLEMENTATION>\n}. qq{</SOFTPKG>\n}" > Lingua-LinkParser.ppd
+	@$(PERL) -e "print qq{<SOFTPKG NAME=\"Lingua-LinkParser\" VERSION=\"1,01,0,0\">\n}. qq{\t<TITLE>Lingua-LinkParser</TITLE>\n}. qq{\t<ABSTRACT></ABSTRACT>\n}. qq{\t<AUTHOR></AUTHOR>\n}. qq{\t<IMPLEMENTATION>\n}. qq{\t\t<OS NAME=\"$(OSNAME)\" />\n}. qq{\t\t<ARCHITECTURE NAME=\"i686-linux\" />\n}. qq{\t\t<CODEBASE HREF=\"\" />\n}. qq{\t</IMPLEMENTATION>\n}. qq{</SOFTPKG>\n}" > Lingua-LinkParser.ppd
 
 # --- MakeMaker pm_to_blib section:
 

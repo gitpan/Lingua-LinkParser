@@ -33,7 +33,8 @@ Installation
 
    This will ask you where your Link Parser package directory is 
    located, and must contain the distribution obj/ and include/ 
-   directories, with obj/ containing compiled object files.
+   directories, with obj/ containing compiled object files. This 
+   might look something like "/home/username/system-4.0/link-4.0".
 
    Once the Makefile is written, you can build and test with:
 
@@ -64,6 +65,14 @@ Todo
 
    I have not added access to the CNode data structure returned by 
    the constituent_tree functions. I will, if requested.
+
+   There exist problems with the postscript output functions; I have 
+   not debugged these. The output using the "parse" binary with the 
+   "!postscript" toggle outputs PS that looks different from the 
+   "get_postscript" function. For now, cutting and pasting the former 
+   into a template seems to work.
+
+   I need to add quite a few tests, since lots of stuff has been added.
 
 Author
 

@@ -1,4 +1,4 @@
-# This Makefile is for the Lingua::LinkParser::Linkage::Sublinkage extension to perl.
+# This Makefile is for the Lingua::LinkParser::Linkage::Word extension to perl.
 #
 # It was generated automatically by MakeMaker version
 # 5.45 (Revision: 1.222) from the contents of
@@ -10,8 +10,8 @@
 #
 #   MakeMaker Parameters:
 
-#	NAME => q[Lingua::LinkParser::Linkage::Sublinkage]
-#	VERSION_FROM => q[Sublinkage.pm]
+#	NAME => q[Lingua::LinkParser::Linkage::Word]
+#	VERSION_FROM => q[Word.pm]
 
 # --- MakeMaker post_initialize section:
 
@@ -43,12 +43,12 @@ FULL_AR = /usr/bin/ar
 
 # --- MakeMaker constants section:
 AR_STATIC_ARGS = cr
-NAME = Lingua::LinkParser::Linkage::Sublinkage
-DISTNAME = Lingua-LinkParser-Linkage-Sublinkage
-NAME_SYM = Lingua_LinkParser_Linkage_Sublinkage
-VERSION = 1.0
-VERSION_SYM = 1_0
-XS_VERSION = 1.0
+NAME = Lingua::LinkParser::Linkage::Word
+DISTNAME = Lingua-LinkParser-Linkage-Word
+NAME_SYM = Lingua_LinkParser_Linkage_Word
+VERSION = 1.01
+VERSION_SYM = 1_01
+XS_VERSION = 1.01
 INST_BIN = ../../blib/bin
 INST_EXE = ../../blib/script
 INST_LIB = ../../blib/lib
@@ -89,11 +89,11 @@ MM_VERSION = 5.45
 # ROOTEXT = Directory part of FULLEXT with leading slash (eg /DBD)  !!! Deprecated from MM 5.32  !!!
 # PARENT_NAME = NAME without BASEEXT and no trailing :: (eg Foo::Bar)
 # DLBASE  = Basename part of dynamic library. May be just equal BASEEXT.
-FULLEXT = Lingua/LinkParser/Linkage/Sublinkage
-BASEEXT = Sublinkage
+FULLEXT = Lingua/LinkParser/Linkage/Word
+BASEEXT = Word
 PARENT_NAME = Lingua::LinkParser::Linkage
 DLBASE = $(BASEEXT)
-VERSION_FROM = Sublinkage.pm
+VERSION_FROM = Word.pm
 OBJECT = 
 LDFROM = $(OBJECT)
 LINKTYPE = dynamic
@@ -148,10 +148,10 @@ EXPORT_LIST =
 
 PERL_ARCHIVE = 
 
-TO_INST_PM = Sublinkage.pm
+TO_INST_PM = Word.pm
 
-PM_TO_BLIB = Sublinkage.pm \
-	$(INST_LIBDIR)/Sublinkage.pm
+PM_TO_BLIB = Word.pm \
+	$(INST_LIBDIR)/Word.pm
 
 
 # --- MakeMaker tool_autosplit section:
@@ -334,14 +334,7 @@ manifypods : pure_all
 
 # --- MakeMaker subdirs section:
 
-# The default clean, realclean and test targets in this Makefile
-# have automatically been given entries for each subdir.
-
-
-subdirs ::
-	@cd Link && $(MAKE) all $(PASTHRU)
-
-
+# none
 
 # --- MakeMaker clean section:
 
@@ -349,7 +342,6 @@ subdirs ::
 # the Makefile here so a later make realclean still has a makefile to use.
 
 clean ::
-	-cd Link && $(TEST_F) Makefile && $(MAKE) clean
 	-rm -rf ./blib $(MAKE_APERL_FILE) $(INST_ARCHAUTODIR)/extralibs.all perlmain.c mon.out core core.*perl.*.? *perl.core so_locations pm_to_blib *~ */*~ */*/*~ *$(OBJ_EXT) *$(LIB_EXT) perl.exe $(BOOTSTRAP) $(BASEEXT).bso $(BASEEXT).def $(BASEEXT).exp
 	-mv Makefile Makefile.old $(DEV_NULL)
 
@@ -358,10 +350,8 @@ clean ::
 
 # Delete temporary files (via clean) and also delete installed files
 realclean purge ::  clean
-	-cd Link && $(TEST_F) Makefile.old && $(MAKE) -f Makefile.old realclean
-	-cd Link && $(TEST_F) Makefile && $(MAKE)  realclean
 	rm -rf $(INST_AUTODIR) $(INST_ARCHAUTODIR)
-	rm -f $(INST_LIBDIR)/Sublinkage.pm
+	rm -f $(INST_LIBDIR)/Word.pm
 	rm -rf Makefile Makefile.old
 
 
@@ -425,7 +415,7 @@ TESTDB_SW = -d
 testdb :: testdb_$(LINKTYPE)
 
 test :: $(TEST_TYPE)
-	@cd Link && $(TEST_F) Makefile && $(MAKE) test $(PASTHRU)
+	@echo 'No tests defined for $(NAME) extension.'
 
 test_dynamic :: pure_all
 
@@ -441,7 +431,7 @@ testdb_static :: testdb_dynamic
 # --- MakeMaker ppd section:
 # Creates a PPD (Perl Package Description) for a binary distribution.
 ppd:
-	@$(PERL) -e "print qq{<SOFTPKG NAME=\"Lingua-LinkParser-Linkage-Sublinkage\" VERSION=\"1,0,0,0\">\n}. qq{\t<TITLE>Lingua-LinkParser-Linkage-Sublinkage</TITLE>\n}. qq{\t<ABSTRACT></ABSTRACT>\n}. qq{\t<AUTHOR></AUTHOR>\n}. qq{\t<IMPLEMENTATION>\n}. qq{\t\t<OS NAME=\"$(OSNAME)\" />\n}. qq{\t\t<ARCHITECTURE NAME=\"i686-linux\" />\n}. qq{\t\t<CODEBASE HREF=\"\" />\n}. qq{\t</IMPLEMENTATION>\n}. qq{</SOFTPKG>\n}" > Lingua-LinkParser-Linkage-Sublinkage.ppd
+	@$(PERL) -e "print qq{<SOFTPKG NAME=\"Lingua-LinkParser-Linkage-Word\" VERSION=\"1,01,0,0\">\n}. qq{\t<TITLE>Lingua-LinkParser-Linkage-Word</TITLE>\n}. qq{\t<ABSTRACT></ABSTRACT>\n}. qq{\t<AUTHOR></AUTHOR>\n}. qq{\t<IMPLEMENTATION>\n}. qq{\t\t<OS NAME=\"$(OSNAME)\" />\n}. qq{\t\t<ARCHITECTURE NAME=\"i686-linux\" />\n}. qq{\t\t<CODEBASE HREF=\"\" />\n}. qq{\t</IMPLEMENTATION>\n}. qq{</SOFTPKG>\n}" > Lingua-LinkParser-Linkage-Word.ppd
 
 # --- MakeMaker pm_to_blib section:
 
