@@ -1,5 +1,5 @@
   ==================================================================
-  Lingua::LinkParser 1.03
+  Lingua::LinkParser 1.06
   Copyright 2000 by Dan Brian
 
   This program is free software; you can redistribute it and/or modify
@@ -32,7 +32,7 @@ Installation
        perl Makefile.PL
 
    This will ask you where your Link Parser package directory is 
-   located, and must contain the distribution obj/ and include/ 
+   located, and must contain the distribution obj/, include/, and data/
    directories, with obj/ containing compiled object files. This 
    might look something like "/home/username/system-4.0/link-4.0".
 
@@ -65,9 +65,6 @@ Documentation
 
 Todo
 
-   I have not added access to the CNode data structure returned by 
-   the constituent_tree functions. I will, if requested.
-
    There exist problems with the postscript output functions; I have 
    not debugged these. The output using the "parse" binary with the 
    "!postscript" toggle outputs PS that looks different from the 
@@ -78,5 +75,5 @@ Todo
 
 Author
 
-   Dan Brian <dbrian@brians.org>
+   Dan Brian <dan@brians.org>
 

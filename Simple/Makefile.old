@@ -1,4 +1,4 @@
-# This Makefile is for the Lingua::LinkParser::Definitions extension to perl.
+# This Makefile is for the Lingua::LinkParser::Simple extension to perl.
 #
 # It was generated automatically by MakeMaker version
 # 5.45 (Revision: 1.222) from the contents of
@@ -10,8 +10,11 @@
 #
 #   MakeMaker Parameters:
 
-#	NAME => q[Lingua::LinkParser::Definitions]
-#	VERSION_FROM => q[Definitions.pm]
+#	ABSTRACT_FROM => q[Simple.pm]
+#	AUTHOR => q[A. U. Thor <a.u.thor@a.galaxy.far.far.away>]
+#	NAME => q[Lingua::LinkParser::Simple]
+#	PREREQ_PM => {  }
+#	VERSION_FROM => q[Simple.pm]
 
 # --- MakeMaker post_initialize section:
 
@@ -43,9 +46,9 @@ FULL_AR = /usr/bin/ar
 
 # --- MakeMaker constants section:
 AR_STATIC_ARGS = cr
-NAME = Lingua::LinkParser::Definitions
-DISTNAME = Lingua-LinkParser-Definitions
-NAME_SYM = Lingua_LinkParser_Definitions
+NAME = Lingua::LinkParser::Simple
+DISTNAME = Lingua-LinkParser-Simple
+NAME_SYM = Lingua_LinkParser_Simple
 VERSION = 1.06
 VERSION_SYM = 1_06
 XS_VERSION = 1.06
@@ -89,11 +92,11 @@ MM_VERSION = 5.45
 # ROOTEXT = Directory part of FULLEXT with leading slash (eg /DBD)  !!! Deprecated from MM 5.32  !!!
 # PARENT_NAME = NAME without BASEEXT and no trailing :: (eg Foo::Bar)
 # DLBASE  = Basename part of dynamic library. May be just equal BASEEXT.
-FULLEXT = Lingua/LinkParser/Definitions
-BASEEXT = Definitions
+FULLEXT = Lingua/LinkParser/Simple
+BASEEXT = Simple
 PARENT_NAME = Lingua::LinkParser
 DLBASE = $(BASEEXT)
-VERSION_FROM = Definitions.pm
+VERSION_FROM = Simple.pm
 OBJECT = 
 LDFROM = $(OBJECT)
 LINKTYPE = dynamic
@@ -106,7 +109,7 @@ H_FILES =
 HTMLLIBPODS    = 
 HTMLSCRIPTPODS = 
 MAN1PODS = 
-MAN3PODS = Definitions.pm
+MAN3PODS = Simple.pm
 HTMLEXT = html
 INST_MAN1DIR = ../blib/man1
 INSTALLMAN1DIR = /usr/share/man/man1
@@ -150,10 +153,10 @@ PERL_ARCHIVE =
 
 PERL_ARCHIVE_AFTER = 
 
-TO_INST_PM = Definitions.pm
+TO_INST_PM = Simple.pm
 
-PM_TO_BLIB = Definitions.pm \
-	$(INST_LIBDIR)/Definitions.pm
+PM_TO_BLIB = Simple.pm \
+	$(INST_LIBDIR)/Simple.pm
 
 
 # --- MakeMaker tool_autosplit section:
@@ -340,10 +343,10 @@ POD2MAN = $(PERL) -we '%m=@ARGV;for (keys %m){' \
 -e 'system(qq[$$^X ].q["-I$(PERL_ARCHLIB)" "-I$(PERL_LIB)" $(POD2MAN_EXE) ].qq[$$_>$$m{$$_}])==0 or warn "Couldn\047t install $$m{$$_}\n";' \
 -e 'chmod(oct($(PERM_RW))), $$m{$$_} or warn "chmod $(PERM_RW) $$m{$$_}: $$!\n";}'
 
-manifypods : pure_all Definitions.pm
+manifypods : pure_all Simple.pm
 	@$(POD2MAN) \
-	Definitions.pm \
-	$(INST_MAN3DIR)/Lingua::LinkParser::Definitions.$(MAN3EXT)
+	Simple.pm \
+	$(INST_MAN3DIR)/Lingua::LinkParser::Simple.$(MAN3EXT)
 
 # --- MakeMaker processPL section:
 
@@ -370,7 +373,7 @@ clean ::
 # Delete temporary files (via clean) and also delete installed files
 realclean purge ::  clean
 	rm -rf $(INST_AUTODIR) $(INST_ARCHAUTODIR)
-	rm -f  $(INST_LIBDIR)/Definitions.pm
+	rm -f  $(INST_LIBDIR)/Simple.pm
 	rm -rf Makefile Makefile.old
 
 
@@ -450,7 +453,7 @@ testdb_static :: testdb_dynamic
 # --- MakeMaker ppd section:
 # Creates a PPD (Perl Package Description) for a binary distribution.
 ppd:
-	@$(PERL) -e "print qq{<SOFTPKG NAME=\"Lingua-LinkParser-Definitions\" VERSION=\"1,06,0,0\">\n}. qq{\t<TITLE>Lingua-LinkParser-Definitions</TITLE>\n}. qq{\t<ABSTRACT></ABSTRACT>\n}. qq{\t<AUTHOR></AUTHOR>\n}. qq{\t<IMPLEMENTATION>\n}. qq{\t\t<OS NAME=\"$(OSNAME)\" />\n}. qq{\t\t<ARCHITECTURE NAME=\"darwin\" />\n}. qq{\t\t<CODEBASE HREF=\"\" />\n}. qq{\t</IMPLEMENTATION>\n}. qq{</SOFTPKG>\n}" > Lingua-LinkParser-Definitions.ppd
+	@$(PERL) -e "print qq{<SOFTPKG NAME=\"Lingua-LinkParser-Simple\" VERSION=\"1,06,0,0\">\n}. qq{\t<TITLE>Lingua-LinkParser-Simple</TITLE>\n}. qq{\t<ABSTRACT>Perl extension for blah blah blah</ABSTRACT>\n}. qq{\t<AUTHOR>A. U. Thor &lt;a.u.thor\@a.galaxy.far.far.away&gt;</AUTHOR>\n}. qq{\t<IMPLEMENTATION>\n}. qq{\t\t<OS NAME=\"$(OSNAME)\" />\n}. qq{\t\t<ARCHITECTURE NAME=\"darwin\" />\n}. qq{\t\t<CODEBASE HREF=\"\" />\n}. qq{\t</IMPLEMENTATION>\n}. qq{</SOFTPKG>\n}" > Lingua-LinkParser-Simple.ppd
 
 # --- MakeMaker pm_to_blib section:
 

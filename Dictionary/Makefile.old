@@ -18,25 +18,25 @@
 
 # --- MakeMaker const_config section:
 
-# These definitions are from config.sh (via /usr/local/lib/perl5/5.6.0/i686-linux/Config.pm)
+# These definitions are from config.sh (via /System/Library/Perl/darwin/Config.pm)
 
 # They may have been overridden via Makefile.PL or on the command line
 AR = ar
 CC = cc
-CCCDLFLAGS = -fpic
-CCDLFLAGS = -rdynamic
-DLEXT = so
-DLSRC = dl_dlopen.xs
+CCCDLFLAGS =  
+CCDLFLAGS =  
+DLEXT = bundle
+DLSRC = dl_dyld.xs
 LD = cc
-LDDLFLAGS = -shared -L/usr/local/lib
-LDFLAGS =  -L/usr/local/lib
-LIBC = /lib/libc-2.1.2.so
+LDDLFLAGS = -flat_namespace -bundle -undefined suppress
+LDFLAGS = -flat_namespace
+LIBC = /System/Library/Frameworks/System.framework/System
 LIB_EXT = .a
 OBJ_EXT = .o
-OSNAME = linux
-OSVERS = 2.2.14
-RANLIB = :
-SO = so
+OSNAME = darwin
+OSVERS = 5.3
+RANLIB = /usr/bin/ranlib
+SO = dylib
 EXE_EXT = 
 FULL_AR = /usr/bin/ar
 
@@ -46,31 +46,31 @@ AR_STATIC_ARGS = cr
 NAME = Lingua::LinkParser::Dictionary
 DISTNAME = Lingua-LinkParser-Dictionary
 NAME_SYM = Lingua_LinkParser_Dictionary
-VERSION = 1.05
-VERSION_SYM = 1_05
-XS_VERSION = 1.05
+VERSION = 1.06
+VERSION_SYM = 1_06
+XS_VERSION = 1.06
 INST_BIN = ../blib/bin
 INST_EXE = ../blib/script
 INST_LIB = ../blib/lib
 INST_ARCHLIB = ../blib/arch
 INST_SCRIPT = ../blib/script
-PREFIX = /usr/local
+PREFIX = /usr
 INSTALLDIRS = site
-INSTALLPRIVLIB = $(PREFIX)/lib/perl5/5.6.0
-INSTALLARCHLIB = $(PREFIX)/lib/perl5/5.6.0/i686-linux
-INSTALLSITELIB = $(PREFIX)/lib/perl5/site_perl/5.6.0
-INSTALLSITEARCH = $(PREFIX)/lib/perl5/site_perl/5.6.0/i686-linux
+INSTALLPRIVLIB = /System/Library/Perl
+INSTALLARCHLIB = /System/Library/Perl/darwin
+INSTALLSITELIB = /Library/Perl
+INSTALLSITEARCH = /Library/Perl/darwin
 INSTALLBIN = $(PREFIX)/bin
 INSTALLSCRIPT = $(PREFIX)/bin
-PERL_LIB = /usr/local/lib/perl5/5.6.0
-PERL_ARCHLIB = /usr/local/lib/perl5/5.6.0/i686-linux
-SITELIBEXP = /usr/local/lib/perl5/site_perl/5.6.0
-SITEARCHEXP = /usr/local/lib/perl5/site_perl/5.6.0/i686-linux
+PERL_LIB = /System/Library/Perl
+PERL_ARCHLIB = /System/Library/Perl/darwin
+SITELIBEXP = /Library/Perl
+SITEARCHEXP = /Library/Perl/darwin
 LIBPERL_A = libperl.a
 FIRST_MAKEFILE = Makefile
 MAKE_APERL_FILE = Makefile.aperl
 PERLMAINCC = $(CC)
-PERL_INC = /usr/local/lib/perl5/5.6.0/i686-linux/CORE
+PERL_INC = /System/Library/Perl/darwin/CORE
 PERL = /usr/bin/perl
 FULLPERL = /usr/bin/perl
 FULL_AR = /usr/bin/ar
@@ -81,7 +81,7 @@ XS_VERSION_MACRO = XS_VERSION
 XS_DEFINE_VERSION = -D$(XS_VERSION_MACRO)=\"$(XS_VERSION)\"
 PERL_MALLOC_DEF = -DPERL_EXTMALLOC_DEF -Dmalloc=Perl_malloc -Dfree=Perl_mfree -Drealloc=Perl_realloc -Dcalloc=Perl_calloc
 
-MAKEMAKER = /usr/local/lib/perl5/5.6.0/ExtUtils/MakeMaker.pm
+MAKEMAKER = /System/Library/Perl/ExtUtils/MakeMaker.pm
 MM_VERSION = 5.45
 
 # FULLEXT = Pathname for extension directory (eg Foo/Bar/Oracle).
@@ -109,10 +109,10 @@ MAN1PODS =
 MAN3PODS = 
 HTMLEXT = html
 INST_MAN1DIR = ../blib/man1
-INSTALLMAN1DIR = $(PREFIX)/man/man1
+INSTALLMAN1DIR = /usr/share/man/man1
 MAN1EXT = 1
 INST_MAN3DIR = ../blib/man3
-INSTALLMAN3DIR = $(PREFIX)/man/man3
+INSTALLMAN3DIR = /usr/share/man/man3
 MAN3EXT = 3
 PERM_RW = 644
 PERM_RWX = 755
@@ -147,6 +147,8 @@ INST_BOOT    =
 EXPORT_LIST = 
 
 PERL_ARCHIVE = 
+
+PERL_ARCHIVE_AFTER = 
 
 TO_INST_PM = Dictionary.pm
 
@@ -249,21 +251,21 @@ config :: $(INST_ARCHAUTODIR)/.exists
 config :: $(INST_AUTODIR)/.exists
 	@$(NOOP)
 
-$(INST_AUTODIR)/.exists :: /usr/local/lib/perl5/5.6.0/i686-linux/CORE/perl.h
+$(INST_AUTODIR)/.exists :: /System/Library/Perl/darwin/CORE/perl.h
 	@$(MKPATH) $(INST_AUTODIR)
-	@$(EQUALIZE_TIMESTAMP) /usr/local/lib/perl5/5.6.0/i686-linux/CORE/perl.h $(INST_AUTODIR)/.exists
+	@$(EQUALIZE_TIMESTAMP) /System/Library/Perl/darwin/CORE/perl.h $(INST_AUTODIR)/.exists
 
 	-@$(CHMOD) $(PERM_RWX) $(INST_AUTODIR)
 
-$(INST_LIBDIR)/.exists :: /usr/local/lib/perl5/5.6.0/i686-linux/CORE/perl.h
+$(INST_LIBDIR)/.exists :: /System/Library/Perl/darwin/CORE/perl.h
 	@$(MKPATH) $(INST_LIBDIR)
-	@$(EQUALIZE_TIMESTAMP) /usr/local/lib/perl5/5.6.0/i686-linux/CORE/perl.h $(INST_LIBDIR)/.exists
+	@$(EQUALIZE_TIMESTAMP) /System/Library/Perl/darwin/CORE/perl.h $(INST_LIBDIR)/.exists
 
 	-@$(CHMOD) $(PERM_RWX) $(INST_LIBDIR)
 
-$(INST_ARCHAUTODIR)/.exists :: /usr/local/lib/perl5/5.6.0/i686-linux/CORE/perl.h
+$(INST_ARCHAUTODIR)/.exists :: /System/Library/Perl/darwin/CORE/perl.h
 	@$(MKPATH) $(INST_ARCHAUTODIR)
-	@$(EQUALIZE_TIMESTAMP) /usr/local/lib/perl5/5.6.0/i686-linux/CORE/perl.h $(INST_ARCHAUTODIR)/.exists
+	@$(EQUALIZE_TIMESTAMP) /System/Library/Perl/darwin/CORE/perl.h $(INST_ARCHAUTODIR)/.exists
 
 	-@$(CHMOD) $(PERM_RWX) $(INST_ARCHAUTODIR)
 
@@ -342,7 +344,7 @@ manifypods : pure_all
 # the Makefile here so a later make realclean still has a makefile to use.
 
 clean ::
-	-rm -rf ./blib $(MAKE_APERL_FILE) $(INST_ARCHAUTODIR)/extralibs.all perlmain.c mon.out core core.*perl.*.? *perl.core so_locations pm_to_blib *~ */*~ */*/*~ *$(OBJ_EXT) *$(LIB_EXT) perl.exe $(BOOTSTRAP) $(BASEEXT).bso $(BASEEXT).def $(BASEEXT).exp
+	-rm -rf ./blib $(MAKE_APERL_FILE) $(INST_ARCHAUTODIR)/extralibs.all perlmain.c mon.out core core.*perl.*.? *perl.core so_locations pm_to_blib *$(OBJ_EXT) *$(LIB_EXT) perl.exe $(BOOTSTRAP) $(BASEEXT).bso $(BASEEXT).def $(BASEEXT).exp
 	-mv Makefile Makefile.old $(DEV_NULL)
 
 
@@ -351,7 +353,7 @@ clean ::
 # Delete temporary files (via clean) and also delete installed files
 realclean purge ::  clean
 	rm -rf $(INST_AUTODIR) $(INST_ARCHAUTODIR)
-	rm -f $(INST_LIBDIR)/Dictionary.pm
+	rm -f  $(INST_LIBDIR)/Dictionary.pm
 	rm -rf Makefile Makefile.old
 
 
@@ -431,14 +433,14 @@ testdb_static :: testdb_dynamic
 # --- MakeMaker ppd section:
 # Creates a PPD (Perl Package Description) for a binary distribution.
 ppd:
-	@$(PERL) -e "print qq{<SOFTPKG NAME=\"Lingua-LinkParser-Dictionary\" VERSION=\"1,05,0,0\">\n}. qq{\t<TITLE>Lingua-LinkParser-Dictionary</TITLE>\n}. qq{\t<ABSTRACT></ABSTRACT>\n}. qq{\t<AUTHOR></AUTHOR>\n}. qq{\t<IMPLEMENTATION>\n}. qq{\t\t<OS NAME=\"$(OSNAME)\" />\n}. qq{\t\t<ARCHITECTURE NAME=\"i686-linux\" />\n}. qq{\t\t<CODEBASE HREF=\"\" />\n}. qq{\t</IMPLEMENTATION>\n}. qq{</SOFTPKG>\n}" > Lingua-LinkParser-Dictionary.ppd
+	@$(PERL) -e "print qq{<SOFTPKG NAME=\"Lingua-LinkParser-Dictionary\" VERSION=\"1,06,0,0\">\n}. qq{\t<TITLE>Lingua-LinkParser-Dictionary</TITLE>\n}. qq{\t<ABSTRACT></ABSTRACT>\n}. qq{\t<AUTHOR></AUTHOR>\n}. qq{\t<IMPLEMENTATION>\n}. qq{\t\t<OS NAME=\"$(OSNAME)\" />\n}. qq{\t\t<ARCHITECTURE NAME=\"darwin\" />\n}. qq{\t\t<CODEBASE HREF=\"\" />\n}. qq{\t</IMPLEMENTATION>\n}. qq{</SOFTPKG>\n}" > Lingua-LinkParser-Dictionary.ppd
 
 # --- MakeMaker pm_to_blib section:
 
 pm_to_blib: $(TO_INST_PM)
 	@$(PERL) "-I$(INST_ARCHLIB)" "-I$(INST_LIB)" \
 	"-I$(PERL_ARCHLIB)" "-I$(PERL_LIB)" -MExtUtils::Install \
-        -e "pm_to_blib({qw{$(PM_TO_BLIB)}},'$(INST_LIB)/auto')"
+        -e "pm_to_blib({qw{$(PM_TO_BLIB)}},'$(INST_LIB)/auto','$(PM_FILTER)')"
 	@$(TOUCH) $@
 
 

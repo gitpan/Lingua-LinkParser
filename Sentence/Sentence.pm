@@ -5,7 +5,7 @@
   use overload '""' => "as_string";
   use vars qw($VERSION);
 
-  $VERSION = '1.05';
+  $VERSION = '1.06';
 
   sub new {
       my $class = shift;
@@ -16,6 +16,7 @@
           _opts => $parser->opts,
           _text => $text
       };
+      return unless ($self->{_sent});
       $self->{_num_linkages} = Lingua::LinkParser::sentence_parse($self->{_sent}, $self->{_opts});
       return $self;
   }

@@ -86,6 +86,11 @@ Revision history for Perl extension Lingua::LinkParser.
     - Started varifying arguments for constructurs in Lingua::LinkParser,
       Lingua::LinkParser::Sentence and  and Lingua::LinkParser::Linkage.
 
+1.06
+    - Added Lingua::LinkParser::Simple to facilitate very easy processing; this
+      will collect methods like 'extract_subject' that require no link knowledge
+    - Fixed several POD bugs related to $sentence->linkages.
+
 TODO:
 
     Change constructors to verify arguments.

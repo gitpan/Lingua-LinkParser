@@ -1,5 +1,4 @@
 #!/usr/bin/perl
-
 use Lingua::LinkParser;
 
 $parser = new Lingua::LinkParser;
