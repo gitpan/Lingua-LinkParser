@@ -5,12 +5,13 @@ use strict;
 require Exporter;
 require AutoLoader;
 
-our @ISA    = ("Exporter");
-our @EXPORT = qw(define);
+use vars qw(@ISA $VERSION @EXPORT %SHORT_DEFS @LONG_DEFS);
 
-our $VERSION = '1.03';
+$VERSION = '1.04';
+@ISA    = ("Exporter");
+@EXPORT = qw(define);
 
-our %SHORT_DEFS = (
+%SHORT_DEFS = (
 
 A => 'connects pre-noun ("attributive") adjectives to following nouns: "The BIG DOG chased me", "The BIG BLACK UGLY DOG chased me".',
 AA => 'is used in the construction "How [adj] a [noun] was it?". It connects the adjective to the following "a".', 
@@ -121,7 +122,7 @@ YS => 'connects nouns to the possessive suffix "\'s": "JOHN \'S dog is black".  
 Z => 'coennects the preposition "as" to certain verbs: "AS we EXPECTED, he was late".  '
 );
 
-our @LONG_DEFS = (
+@LONG_DEFS = (
     "A", "AA", "AF", "AL", "AM", "AN", "AZ", "B", "BI", "BT", "BW", "C", "CC", "CO", "CP",
     "CQ", "CX", "D", "DD", "DG", "DP", "DT", "E", "EA", "EB", "EC", "EE", "EF", "EI", "EL",
     "EN", "ER", "EZ", "FL", "FM", "G", "GN", "H", "I", "ID", "IN", "J", "JG", "JQ", "JT",

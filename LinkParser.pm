@@ -10,11 +10,13 @@ use Lingua::LinkParser::Dictionary;
 require Exporter;
 require DynaLoader;
 
-our @ISA = qw(DynaLoader);
-our $VERSION = '1.03';
+use vars qw(@ISA $VERSION $DATA_DIR);
+
+@ISA = qw(DynaLoader);
+$VERSION = '1.04';
 
 # this global stores the directory path for the Link Grammar data
-our $DATA_DIR='/home/garron/system-4.1/link-4.1/data';
+$DATA_DIR='/home/garron/system-4.1/link-4.1/data';
 
 =head1 NAME
 
@@ -26,7 +28,7 @@ Lingua::LinkParser - Perl module implementing the Link Grammar Parser by Sleator
  
   our $parser = new Lingua::LinkParser;
   my $sentence = $parser->create_sentence("This is the turning point.");
-  my @linkages = $parser->linkages($sentence);
+  my @linkages = $parser->linkages;
   foreach $linkage (@linkages) {
       print ($parser->get_diagram($linkage));
   }

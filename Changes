@@ -75,6 +75,11 @@ Revision history for Perl extension Lingua::LinkParser.
       value warnings.
     - Fixed grammarregex.pl to use a negated look-ahead assertion.
     
+1.04  Mon Nov 27 16:23:11 2000
+
+    - Fixed some perldoc documentation errors.
+    - Removed 'our' statements for compatability with versions < 5.6.
+
 TODO:
 
     Change constructors to verify arguments.

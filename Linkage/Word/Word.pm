@@ -1,7 +1,8 @@
 package Lingua::LinkParser::Linkage::Word;
 use strict;
+use vars qw($VERSION);
 
-our $VERSION = "1.03";
+$VERSION = '1.04';
 
 sub new {
     my $class     = shift;

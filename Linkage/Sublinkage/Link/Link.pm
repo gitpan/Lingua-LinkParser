@@ -1,7 +1,8 @@
 package Lingua::LinkParser::Linkage::Sublinkage::Link;
 use strict;
+use vars qw($VERSION);
 
-our $VERSION = '1.03';
+$VERSION = '1.04';
 
 sub new {
     my ($class,$index,$subindex,$linkage,$label,$linkword) = @_;
