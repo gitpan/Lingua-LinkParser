@@ -103,7 +103,12 @@ Revision history for Perl extension Lingua::LinkParser.
     - Applied patches by Benji Adams to:
       * fix indexes for words occuring more than once (Word.pm)
       * fix uninitialized errors for indexes (Link.pm)
-      
+
+1.10  Feb 28 2009
+    - Fixed build to work with 4.2.2 (AbiSource), not compatible with previous versions
+    - Build no longer extracts object files or prompts for package directory (see INSTALL)
+    - Constructor only takes a lang arg (optional), no dictionary paths anymore
+
 TODO:
 
     Add support for CNode structs, to allow for browsing of constituent trees. 

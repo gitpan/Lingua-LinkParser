@@ -1,7 +1,6 @@
 use Lingua::LinkParser;
 
 my $parser = new Lingua::LinkParser;
-print $parser;
 
 my $sentence = $parser->create_sentence("Moses supposes his toses are roses.");
 my $linkage  = $sentence->linkage(1);

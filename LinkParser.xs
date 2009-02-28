@@ -34,6 +34,12 @@ constant(sv,arg)
     OUTPUT:
 	RETVAL
 
+Dictionary
+dictionary_create_lang(lang)
+	const char * lang
+
+Dictionary
+dictionary_create_default_lang()
 
 Dictionary
 dictionary_create(dict_name, pp_name, cons_name, affix_name)
@@ -78,19 +84,19 @@ call_linkage_get_link_domain_names(linkage, index)
         int     index
     PREINIT:
         int j;
-        char **names;
+        const char **names;
     PPCODE:
         names = linkage_get_link_domain_names(linkage, index);
         for (j=0; j<linkage_get_link_num_domains(linkage, index); ++j) {
             XPUSHs(newSVpv(names[j],0));
         }
 
-char **
+const char **
 linkage_get_link_domain_names(linkage, index)
         Linkage linkage
         int     index
 
-char *
+const char *
 linkage_get_link_label(linkage, index)
 	Linkage	linkage
 	int	index
@@ -100,7 +106,7 @@ linkage_get_link_length(linkage, index)
 	Linkage	linkage
 	int	index
 
-char *
+const char *
 linkage_get_link_llabel(linkage, index)
 	Linkage	linkage
 	int	index
@@ -115,7 +121,7 @@ linkage_get_link_num_domains(linkage, index)
 	Linkage	linkage
 	int	index
 
-char *
+const char *
 linkage_get_link_rlabel(linkage, index)
 	Linkage	linkage
 	int	index
@@ -141,11 +147,11 @@ Sentence
 linkage_get_sentence(linkage)
 	Linkage	linkage
 
-char *
+const char *
 linkage_get_violation_name(linkage)
 	Linkage	linkage
 
-char *
+const char *
 linkage_get_word(linkage, w)
 	Linkage	linkage
 	int	w
@@ -155,14 +161,14 @@ call_linkage_get_words(linkage)
         Linkage linkage
     PREINIT:
         int j;
-        char **words;
+        const char **words;
     PPCODE:
         words = linkage_get_words(linkage);
         for (j=0; j<linkage_get_num_words(linkage); ++j) {
             XPUSHs(newSVpv(words[j],0));
         }
 
-char **
+const char **
 linkage_get_words(linkage)
 	Linkage	linkage
 
@@ -185,7 +191,7 @@ linkage_link_cost(linkage)
 void
 linkage_post_process(linkage, postprocessor)
 	Linkage	linkage
-	PostProcessor	postprocessor
+	PostProcessor *	postprocessor
 
 char *
 linkage_print_diagram(linkage)
@@ -451,12 +457,11 @@ parse_options_timer_expired(opts)
 
 void
 post_process_close(postprocessor)
-	PostProcessor	postprocessor
+	PostProcessor *	postprocessor
 
-Postprocessor *
-post_process_open(dictname, path)
+PostProcessor *
+post_process_open(dictname)
 	char *	dictname
-	char *	path
 
 Sentence
 sentence_create(input_string, dict)

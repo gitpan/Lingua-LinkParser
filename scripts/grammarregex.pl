@@ -8,7 +8,7 @@ $parser->opts('linkage_limit' => 101);
 
 while (1)
 {
-  print "Enter a sentence> "; 
+  print "Enter a sentence about somethig that 'rocks'> "; 
   my $input = <STDIN>;
   last if $input =~ /^\s*$/;
   my $sentence = $parser->create_sentence($input);
