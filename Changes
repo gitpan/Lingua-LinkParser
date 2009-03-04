@@ -106,8 +106,12 @@ Revision history for Perl extension Lingua::LinkParser.
 
 1.10  Feb 28 2009
     - Fixed build to work with 4.2.2 (AbiSource), not compatible with previous versions
-    - Build no longer extracts object files or prompts for package directory (see INSTALL)
+    - Build no longer extracts object files or prompts for package directory (see README)
     - Constructor only takes a lang arg (optional), no dictionary paths anymore
+
+1.11  Mar 3 2009
+    - Doc fixes
+
 
 TODO:
 
