@@ -12,7 +12,7 @@ our @ISA = qw(Exporter);
 our @EXPORT = qw(
   extract_subject
 );
-our $VERSION = '1.11';
+our $VERSION = '1.13';
 
 sub new {
   my $class = shift;
@@ -118,11 +118,9 @@ sub extract_subject {
 
 1;
 __END__
-# Below is stub documentation for your module. You better edit it!
-
 =head1 NAME
 
-Lingua::LinkParser::Simple - Perl extension for blah blah blah
+Lingua::LinkParser::Simple - Experiments with some high-level link grammar processing.
 
 =head1 SYNOPSIS
 
@@ -132,7 +130,8 @@ Lingua::LinkParser::Simple - Perl extension for blah blah blah
 =head1 DESCRIPTION
 
 This module allows simple but incomplete access to the features provided by 
-Lingua::LinkParser.
+Lingua::LinkParser, and should be considered purely experimental. If you have
+any cool functions you'd like added here, let me know.
 
 =item extract_subject(sentence => STRING, verb => WORD)
 
@@ -141,7 +140,7 @@ all words (or noun phrases) that are subjects for that verb.
 
 =head1 AUTHOR
 
-Dan Brian <dan@brians.org>
+Danny Brian <danny@brians.org>
 
 =head1 SEE ALSO
 

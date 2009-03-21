@@ -1,6 +1,6 @@
 ==================================================================
 
-  Lingua::LinkParser 1.11
+  Lingua::LinkParser 1.13
   Copyright 2000-2009 by Danny Brian
 
   This program is free software; you can redistribute it and/or 
@@ -44,7 +44,7 @@ REQUIREMENTS
    *should* be the result of lib issues within the Link Parser itself, but 
    these seem very stable.
 
-Installation
+INSTALLATION
 
    Before you build this package, it is highly recommended that you install 
    the link parser package with 'make install', which will put the libs, 
@@ -82,14 +82,9 @@ DOCUMENTATION
 
 TODO
 
-   There exist problems with the postscript output functions; I have 
-   not debugged these. The output using the "parse" binary with the 
-   "!postscript" toggle outputs PS that looks different from the 
-   "get_postscript" function. For now, cutting and pasting the former 
-   into a template seems to work.
-
-   I need to add quite a few tests, since lots of stuff has been added.
-
+   I need to add quite a few tests. I'd like there to be a large test suite 
+   of sentences.
+  
 AUTHOR
 
    Danny Brian <danny@brians.org>

@@ -20,5 +20,6 @@ scripts/linksanddomains.pl
 scripts/parse.pl
 scripts/postscript.pl
 scripts/words.pl
+t/Lingua-LinkParser-Definitions.t
 t/Lingua-LinkParser.t
 typemap

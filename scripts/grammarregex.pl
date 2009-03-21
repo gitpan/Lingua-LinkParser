@@ -1,5 +1,8 @@
-use Lingua::LinkParser;
 use strict;
+use Lingua::LinkParser;
+
+## Demonstrates the creation of a regular expression to match linkages
+## within a sentence linkage string. Give it "Perl rocks!" as input.
 
 my $parser   = new Lingua::LinkParser;
 

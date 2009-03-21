@@ -1,17 +1,19 @@
+use strict;
 use Lingua::LinkParser;
-$parser = new Lingua::LinkParser;
 
-#$parser->opts('disjunct_cost' => 2);
-#$parser->opts('linkage_limit' => 101);
-#$parser->opts('verbosity' => 1);
+## This uses the link parser API's constituent parser to just get the tree
+## string; see constituent-tree.pl to see how to process the tree itself.
+
+my $parser = new Lingua::LinkParser;
+
 $parser->opts('max_null_count' => 3);
 $parser->opts('min_null_count' => 1);
 
-$sentence = $parser->create_sentence("The man put the book on the table..");
+my $sentence = $parser->create_sentence("The man put the book on the table..");
 
 print "linkages: ", $sentence->num_linkages, "\n";
 
-for $i (1 .. $sentence->num_linkages) {
+for my $i (1 .. $sentence->num_linkages) {
     print $i, ": ", $parser->print_constituent_tree($sentence->linkage($i),1), "\n";
 }
 

@@ -5,9 +5,9 @@ use strict;
 require Exporter;
 require AutoLoader;
 
-use vars qw(@ISA $VERSION @EXPORT %SHORT_DEFS @LONG_DEFS);
+use vars qw(@ISA $VERSION @EXPORT %SHORT_DEFS);
 
-$VERSION = '1.11';
+$VERSION = '1.13';
 @ISA    = ("Exporter");
 @EXPORT = qw(define);
 
@@ -107,6 +107,7 @@ TM => 'is used to connect month names to day numbers: "It happened on JANUARY 21
 TO => 'connects verbs and adjectives which take infinitival complements to the word "to": "We TRIED TO start the car", "We are EAGER TO do it".  ',
 TQ => 'is the determiner connector for time expressions acting as fronted objects: "How MANY YEARS did it last".  ',
 TS => 'connects certain verbs that can take subjunctive clauses as complements - "suggest", "require" - to the word that: "We SUGGESTED THAT he go".  ',
+TT => 'connects nouns to adjectives within phrases that function like conjunctions, connecting clauses.  ',
 TW => 'connects days of the week to dates in time expressions: "The meeting will be on MONDAY, JANUARY 21".  ',
 TY => 'is used for certain idiomatic usages of year numbers: "I saw him on January 21 , 1990 ". (In this case it connects the day number to the year number.) ',
 U => 'is a special connector on nouns, which is disjoined with both the determiner and subject-object connectors. It is used in idiomatic expressions like "What KIND_OF DOG did you buy?" ',
@@ -120,45 +121,22 @@ Y => 'is used in certain idiomatic time and place expressions, to connect quanti
 YP => 'connects plural noun forms ending in s to "\'" in possessive constructions: "The STUDENTS \' rooms are large".  ',
 YS => 'connects nouns to the possessive suffix "\'s": "JOHN \'S dog is black".  ',
 Z => 'coennects the preposition "as" to certain verbs: "AS we EXPECTED, he was late".  '
-);
 
-@LONG_DEFS = (
-    "A", "AA", "AF", "AL", "AM", "AN", "AZ", "B", "BI", "BT", "BW", "C", "CC", "CO", "CP",
-    "CQ", "CX", "D", "DD", "DG", "DP", "DT", "E", "EA", "EB", "EC", "EE", "EF", "EI", "EL",
-    "EN", "ER", "EZ", "FL", "FM", "G", "GN", "H", "I", "ID", "IN", "J", "JG", "JQ", "JT",
-    "K", "L", "LE", "LI", "M", "MF", "MG", "MV", "MX", "N", "ND", "NF", "NI", "NJ", "NN",
-    "NO", "NR", "NS", "NT", "NW", "O", "OD", "OF", "ON", "NT", "OX", "P", "PF", "PP", "Q",
-    "QI", "R", "RS", "RW", "S", "SF", "SFI", "SI", "SX", "SXI", "TA", "TD", "TH", "TI", 
-    "TM", "TO", "TQ", "TS", "TT", "TW", "TY", "U", "UN", "V", "W", "WN", "WR", "X", "Y", 
-    "YP", "YS", "Z"
 );
 
 sub define {
     my $linktype  = shift;
-    my $deftype   = shift || "short";
-
-    if ($deftype eq "link") {
-        if (!grep(/$linktype/,@LONG_DEFS)) {
-            $linktype =~ s/[a-z]+$//;
-            if (!grep(/$linktype/,@LONG_DEFS)) {
-                return "Long definition not found for type $linktype.";
-            } else {
-                return "section-$linktype.html";
-            }
-        } else {
-            return "section-$linktype.html";
-        }
-    } else {
-        if (!exists($SHORT_DEFS{$linktype})) { 
-            $linktype =~ s/[a-z]+$//;
-            if (!exists($SHORT_DEFS{$linktype})) {
-                return "Short definition not found for type $linktype.";
-            } else {
-                return "$linktype ", $SHORT_DEFS{$linktype};
-            }
+    if (!exists($SHORT_DEFS{$linktype})) { 
+        $linktype =~ s/[a-z]+$//;
+        if (!exists($SHORT_DEFS{$linktype})) {
+            return "Short definition not found for type $linktype.";
         } else {
             return "$linktype ", $SHORT_DEFS{$linktype};
-        }        
+        }
+    }
+    else
+    {
+        return "$linktype ", $SHORT_DEFS{$linktype};
     }
 }
 
@@ -174,13 +152,13 @@ Lingua::LinkParser::Definitions - Extension to the Lingua::LinkParser module pro
 
   use Lingua::LinkParser::Definitions;
 
-  my $definition = define(LINKTYPE,'short|link');
+  my $definition = define(LINKTYPE);
 
 =head1 DESCRIPTION
 
-  This module provides an interface to retrieving text information about link types within Link Grammar, much link context-sensitive "help". There are two formats to this information: one, a short summary definiting a type, and two, a link to the full document which can be used within a web interface, or referenced locally. This documenation is taken from the Link Parser web site at http://bobo.link.cs.cmu.edu/index.html/dict/index.html, and is equivalent to the "short summary" and "guide-to-links" documents.
+  This module provides an interface to retrieving text information about link types within Link Grammar, much link context-sensitive "help". 
 
-  There is only one function, 'lookup()'. It takes a link type and a "short" or "link" string. If no second parameter is present, the lookup will default to short. The module will look for an entry for that link type; if none is found, it will strip off the last character for link sub-types, and try again. 
+  There is only one function, 'define()', which takes a link type.
 
   While the data provided by this module might be considered too dynamic for inclusion in a package of its own, in truth the definitions change little. They are included here only for convenience by persons who, like myself, do not have the types memorized, and don't enjoy looking them up every time they parse a sentence. :)
 

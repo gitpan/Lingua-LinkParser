@@ -1,17 +1,18 @@
+use strict;
 use Lingua::LinkParser;
-$parser = new Lingua::LinkParser;
 
-#$parser->opts('disjunct_cost' => 2);
-#$parser->opts('linkage_limit' => 101);
-#$parser->opts('verbosity' => 1);
+my $parser = new Lingua::LinkParser;
+
+## Outputs domains direction from the API's linkage_print_links_and_domains() function.
+
 $parser->opts('max_null_count' => 3);
 $parser->opts('min_null_count' => 1);
 
-$sentence = $parser->create_sentence("We met in New York.");
+my $sentence = $parser->create_sentence("We met in New York.");
 
 print "linkages: ", $sentence->num_linkages, "\n";
 
-for $i (1 .. $sentence->num_linkages) {
+for my $i (1 .. $sentence->num_linkages) {
     print $i, ": ", $parser->get_domains($sentence->linkage($i),2), "\n";
 }
 

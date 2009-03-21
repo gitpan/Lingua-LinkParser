@@ -1,4 +1,7 @@
+use strict;
 use Lingua::LinkParser;
+
+## This script demonstrates how to navigate a linkage using a word object.
 
 my $parser = new Lingua::LinkParser;
 
@@ -14,12 +17,12 @@ foreach my $word (@words) {
     }
 } 
 
-my $Moses = '"Moses" ';
+my $Moses = '"Moses\.\w" ';
 my $does_something = 'Ss:\d+:(\w+)\.v';
-my $action_by_moses = "$Moses$does_something";
+my $action_by_moses = "$Moses\s*$does_something";
 
 if ($linkage =~ /$action_by_moses/o) {
-    print "What does Moses do? He $1.\n";
+    print "\nWhat does Moses do? He $1, of course.\n\n";
 } 
 
 

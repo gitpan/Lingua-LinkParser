@@ -1,14 +1,17 @@
 #!/usr/bin/perl
+use strict;
 use Lingua::LinkParser;
 
-$parser = new Lingua::LinkParser;
+## Demonstrates a parse with extended options.
+
+my $parser = new Lingua::LinkParser;
 
 while (1) {
   print "Enter a sentence: ";
-  $text = <STDIN>;
+  my $text = <STDIN>;
   $parser->opts(
                 'max_sentence_length' => 70,
-                'panic_mode'          => TRUE,
+                'panic_mode'          => 1,
                 'max_parse_time'      => 30,
                 'linkage_limit'       => 1000,
                 'short_length'        => 10,
@@ -47,10 +50,10 @@ while (1) {
       }
   }
 
-  for $i (1 .. $sentence->num_linkages) {
-      $linkage = $sentence->linkage($i);
+  for my $i (1 .. $sentence->num_linkages) {
+      my $linkage = $sentence->linkage($i);
       $linkage->compute_union;
-      $sublinkage = $linkage->sublinkage($linkage->num_sublinkages);
+      my $sublinkage = $linkage->sublinkage($linkage->num_sublinkages);
       print $parser->get_diagram($sublinkage), "\n";
   }
 }

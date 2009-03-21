@@ -1,5 +1,6 @@
 use strict;
-use Test::More tests => 16;
+use Test::More tests => 17;
+use Data::Dumper;
 
 BEGIN { use_ok('Lingua::LinkParser') };
 
@@ -47,4 +48,8 @@ like ($parser->print_constituent_tree($linkage,1), qr!\(S \(NP We\)!, "print_con
 ok ($linkage->num_links > 0, "num_links");
 
 ok ($linkage->words > 0, "words");
+
+my $tree = $linkage->constituent_tree();
+ok (ref $tree, "constituent_tree()");
+
 

@@ -201,11 +201,6 @@ char *
 linkage_print_links_and_domains(linkage)
 	Linkage	linkage
 
-char * 
-linkage_print_constituent_tree(linkage, mode)
-        Linkage linkage
-        int     mode
-
 char *
 linkage_print_postscript(linkage, mode)
 	Linkage	linkage
@@ -477,7 +472,7 @@ sentence_disjunct_cost(sent, i)
 	Sentence	sent
 	int	i
 
-char *
+const char *
 sentence_get_word(sent, wordnum)
 	Sentence	sent
 	int	wordnum
@@ -511,4 +506,41 @@ int
 sentence_parse(sent, opts)
 	Sentence	sent
 	Parse_Options	opts
+
+const char *
+linkage_constituent_node_get_label(cnode)
+	const CNode * cnode
+
+CNode *
+linkage_constituent_node_get_child(cnode)
+	const CNode * cnode
+
+CNode *
+linkage_constituent_node_get_next(cnode)
+        const CNode * cnode
+
+int
+linkage_constituent_node_get_start(cnode)
+        const CNode * cnode
+
+int
+linkage_constituent_node_get_end(cnode)
+	const CNode * cnode
+
+CNode *
+linkage_constituent_tree(linkage)
+	Linkage		linkage
+
+void
+linkage_free_constituent_tree(cnode)
+	CNode * 	cnode
+
+char *
+linkage_print_constituent_tree(linkage, mode)
+	Linkage linkage
+	int     mode
+
+void
+linkage_free_constituent_tree_str(str)
+        char *  str
 

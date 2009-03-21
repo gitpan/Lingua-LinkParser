@@ -11,7 +11,7 @@ use Lingua::LinkParser::Linkage::Word;
 use overload q("") => "new_as_string";
 use vars qw($VERSION);
 
-$VERSION = '1.11';
+$VERSION = '1.13';
 
 sub new {
   unless (@_ == 4) { die 'usage: Lingua::LinkParser::Linkage->new ($index, $sent, $opts)' }
@@ -100,6 +100,39 @@ sub get_words {
 sub violation_name {
      my $self = shift;
      Lingua::LinkParser::linkage_get_violation_name($self->{linkage});
+}
+
+sub constituent_tree {
+    my $self = shift;
+    my $tree = Lingua::LinkParser::linkage_constituent_tree($self->{linkage});
+    ## build and return a data structure representing the constituent tree
+    
+    return _constituent_tree_process($tree);
+}
+
+sub _constituent_tree_process {
+    my $cnode = shift;
+    my $child = Lingua::LinkParser::linkage_constituent_node_get_child($cnode);
+    my $next  = Lingua::LinkParser::linkage_constituent_node_get_next($cnode);
+    my $label = Lingua::LinkParser::linkage_constituent_node_get_label($cnode);
+    my $start = Lingua::LinkParser::linkage_constituent_node_get_start($cnode);
+    my $end   = Lingua::LinkParser::linkage_constituent_node_get_end($cnode);
+    
+    my @tree;
+    
+    my $node = { label => $label, start => $start, end => $end };
+    
+    if ($child) {
+        $node->{child} = _constituent_tree_process( $child );
+    }
+    
+    push @tree, $node;
+
+    if ($next) {
+        push @tree, _constituent_tree_process( $next );
+    }
+
+    return \@tree; 
 }
 
 sub close {

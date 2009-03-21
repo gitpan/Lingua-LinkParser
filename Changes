@@ -108,13 +108,18 @@ Revision history for Perl extension Lingua::LinkParser.
     - Fixed build to work with 4.2.2 (AbiSource), not compatible with previous versions
     - Build no longer extracts object files or prompts for package directory (see README)
     - Constructor only takes a lang arg (optional), no dictionary paths anymore
+    - Reorganized module directory structure.
 
 1.11  Mar 3 2009
     - Doc fixes
 
+1.12  Mar 10 2009
+    - strict-ified scripts/
+    - Removed link definitions from Lingua::LinkParser::Definitions
 
-TODO:
-
-    Add support for CNode structs, to allow for browsing of constituent trees. 
-    Write functions for easy browsing of constituent trees.
+1.13  Mar 20 2009
+    - changed XS return type for sentence_get_word
+    - added $linkage->constituent_tree() to get a constituent tree in a Perl data structure
+    - added scripts/constituent-tree.pl to demonstrate how to process constituent trees
+    - added some comments to the scripts/*
 

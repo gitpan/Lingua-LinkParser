@@ -13,7 +13,7 @@ require DynaLoader;
 use vars qw(@ISA $VERSION $DATA_DIR);
 
 @ISA = qw(DynaLoader);
-$VERSION = '1.11';
+$VERSION = '1.13';
 
 =head1 NAME
 
@@ -37,11 +37,13 @@ Lingua::LinkParser - Perl module implementing the Link Grammar Parser by Sleator
 
 To quote the Link Grammar documentation, "the Link Grammar Parser is a syntactic parser of English, based on link grammar, an original theory of English syntax. Given a sentence, the system assigns to it a syntactic structure, which consists of set of labeled links connecting pairs of words."
 
-This module provides acccess to the parser API using Perl objects to easily analyze linkages. The module organizes data returned from the parser API into an object hierarchy consisting of, in order, sentence, linkage, sublinkage, and link. If this is unclear to you, see the several examples in the 'eg/' directory for a jumpstart on using these objects. The current Lingua::LinkParser module is based on version 4.0 of the Link Grammar parser API.
+This module provides acccess to the parser API using Perl objects to easily analyze linkages. The module organizes data returned from the parser API into an object hierarchy consisting of, in order, sentence, linkage, sublinkage, and link. If this is unclear to you, see the several examples in the 'eg/' directory for a jumpstart on using these objects. The current Lingua::LinkParser module is based on version 4.2 of the Link Grammar parser API.
 
-The objects within this module should not be confused with the types familiar to users of the Link Parser API. The objects used in this module reorganize the API data in a way more usable and friendly to Perl users, and do not exactly represent the types used in the API. For example, an object of class "Lingua::LinkParser::sentence" does not directly correspond to the struct type "Sentence" of the API; rather, it is a Perl object that provides methods to access the underlying API functions.
+The objects within this module should not be confused with the types familiar to users of the Link Parser API. The objects used in this module reorganize the API data in a way more usable and friendly to Perl users, and do not exactly represent the types used in the API. For example, an object of class"Lingua::LinkParser::Sentence does not directly correspond to the struct type "Sentence" of the API; rather, it is a Perl object that provides methods to access the underlying API functions.
 
-This documentation should be supplemented with the extensive texts included with the Link Parser and on the Link Parser web site in order to understand its vernacular and general usage. A new module, Lingua::LinkParser::Definitions stores the link type documentation, and allows in-program retrieval of this information.
+This documentation should be supplemented with the extensive texts included with the Link Parser and on the Link Parser web site in order to understand its vernacular and general usage. Lingua::LinkParser::Definitions stores the basic link type documentation, and allows in-program retrieval of this information for convenience.
+
+Note that most of the objects have overloading behavior, such that if you print an object, you will see a sensible text representation of that object, such as a linkage diagram.
 
 =over
 
@@ -83,11 +85,11 @@ Returns the number of post processing violations for $sentence.
 
 =item $sentence->get_word(NUM)
 
-Returns the word (with original spelling) at position NUM.
+Returns the word (with original spelling) at position NUM, which is 1-indexed.
 
 =item $linkage = $sentence->linkage(NUM)
 
-Assigns a linkage object (Lingua::LinkParser::Linkage) for linkage NUM of sentence $sentence.
+Assigns a linkage object (Lingua::LinkParser::Linkage) for linkage NUM of sentence $sentence. NUM is 1-indexed.
 
 =item @linkages = $sentence->linkages
 
@@ -117,9 +119,13 @@ Combines the sublinkages for $linkage into one, possibly with crossing links.
 
 Returns the name of a rule violated by post-processing of the linkage.
 
+=item $linkage->constituent_tree
+
+Returns a Perl data structure that represents the constituent tree for the linkage. See scripts/constituent-tree.pl for an example of processing the tree.
+
 =item $sublinkage = $linkage->sublinkage(NUM)
 
-Assigns a sublinkage object (Lingua::LinkParser::Linkage::Sublinkage) for sublinkage NUM of linkage $linkage.
+Assigns a sublinkage object (Lingua::LinkParser::Linkage::Sublinkage) for sublinkage NUM of linkage $linkage, which is 1-indexed.
 
 =item @sublinkages = $linkage->sublinkages
 
@@ -127,7 +133,7 @@ Assigns an array of sublinkage objects.
 
 =item $sublinkage->get_word(NUM)
 
-Returns the word for the sublinkage at position NUM.
+Returns the word for the sublinkage at position NUM, 1-indexed.
 
 =item $sublinkage->words
 
@@ -152,7 +158,7 @@ Returns a list of link objects for the word.
 =item $link = $sublinkage->link(NUM)
 
 Assigns a link object (Lingua::LinkParser::Link) for link NUM of sublinkage
-$sublinkage.
+$sublinkage. NUM is 1-indexed.
 
 =item @links = $sublinkage->links
 
@@ -223,7 +229,7 @@ Returns an ASCII formatted tree displaying the constituent parse tree for $linka
 
 =head1 OTHER FUNCTIONS
 
-A few high-level functions have also been provided.
+A few higher-level functions have also been provided.
 
 =over
 
@@ -234,7 +240,7 @@ Assigns a potentially large data structure merging all linkages/sublinkages/link
  
 This array has the following structure:
 
- @bigstruct ( %{ 'word'  => 'WORD',
+ @bigstruct = ( %{ 'word'  => 'WORD',
                  'links' => %{
                     'LINKTYPE_LINKAGENUM' => 'TARGETWORDNUM',...
                  },
@@ -344,11 +350,11 @@ Supplying no VALUE returns the current value for OPTION. Note that not all of th
 
 =head1 AUTHOR
 
-Daniel Brian, dbrian@brians.org
+Danny Brian, danny@brians.org
 
 =head1 SEE ALSO
 
-perl(1).
+http://www.abisource.com/projects/link-grammar/
 http://www.link.cs.cmu.edu/link/.
 
 =cut
@@ -361,7 +367,7 @@ http://www.link.cs.cmu.edu/link/.
     my $self = bless {
             _opts => parse_options_create(),
             _dict => dictionary_create_lang( $arg{Lang} )
-    };
+    }, $class;
     foreach (keys %arg) {
         if (/^[a-z]/) {
             $self->opts($_ => $arg{$_});
