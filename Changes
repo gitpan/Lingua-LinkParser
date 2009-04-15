@@ -123,3 +123,6 @@ Revision history for Perl extension Lingua::LinkParser.
     - added scripts/constituent-tree.pl to demonstrate how to process constituent trees
     - added some comments to the scripts/*
 
+1.14  April 15 2009
+    - fixed tests to be compatible with link parser 4.5.3.
+

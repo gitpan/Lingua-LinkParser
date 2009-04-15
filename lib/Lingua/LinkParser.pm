@@ -13,7 +13,7 @@ require DynaLoader;
 use vars qw(@ISA $VERSION $DATA_DIR);
 
 @ISA = qw(DynaLoader);
-$VERSION = '1.13';
+$VERSION = '1.14';
 
 =head1 NAME
 
