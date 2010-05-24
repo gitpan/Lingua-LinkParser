@@ -126,3 +126,6 @@ Revision history for Perl extension Lingua::LinkParser.
 1.14  April 15 2009
     - fixed tests to be compatible with link parser 4.5.3.
 
+1.15  April 16 2010
+    - minor test fixes for link parser 4.6.x.
+

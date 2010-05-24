@@ -1,7 +1,7 @@
 ==================================================================
 
-  Lingua::LinkParser 1.14
-  Copyright 2000-2009 by Danny Brian
+  Lingua::LinkParser 1.15
+  Copyright 2000-2010 by Danny Brian
 
   This program is free software; you can redistribute it and/or 
   modify it under the same terms as Perl itself.
@@ -62,14 +62,33 @@ INSTALLATION
       make
       make test
 
-   On Linux, the make displays several warnings about redefined macros -
-   these messages may be ignored.
-
-   The test will load the parser dictionary files and parse a sample 
-   sentence. If they do not, back up and figure out why before 
+   The test will load the parser dictionary files and parse a sample
+   sentence. If they do not, back up and figure out why before
    installation. To install:
 
       make install
+
+BUILD PROBLEMS
+
+   On Linux, the make displays several warnings about redefined macros -
+   these messages may be ignored.
+
+   I have noticed recently that Perls >= 5.8.8 on newer Linux installs do
+   not write the Makefile properly. After perl Makefile.PL, be sure your 
+   resulting Makefile has the block:
+
+     # --- MakeMaker const_loadlibs section:
+     # Lingua::LinkParser might depend on some other libraries:
+     # See ExtUtils::Liblist for details
+     #
+     EXTRALIBS = -llink-grammar
+     LDLOADLIBS = -llink-grammar
+     BSLOADLIBS =
+     LD_RUN_PATH = /usr/local/lib
+
+  Or include the path to your libs. You also need to have the lib path in your 
+  /etc/ld.so.conf, and to run ldconfig afterwards. If anybody knows why MakeMaker
+  isn't writing the above for the Makefile, please let me know.
 
 DOCUMENTATION
 

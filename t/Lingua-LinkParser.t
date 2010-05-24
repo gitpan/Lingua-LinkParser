@@ -26,7 +26,7 @@ my $linkage = $sentence->linkage(1);
 ok ($linkage, "linkage");
 
 my $diagram = $parser->get_diagram($linkage);
-like ($diagram, qr!we tried\.v to\.*r* make\.v!, "get_diagram");
+like ($diagram, qr!we tried\.v-d to\.*r* make\.v!, "get_diagram");
 
 my $num_sublinkages = $linkage->num_sublinkages;
 ok ($num_sublinkages > 0, "num_sublinkages");
