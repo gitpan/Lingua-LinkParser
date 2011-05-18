@@ -12,7 +12,7 @@ our @ISA = qw(Exporter);
 our @EXPORT = qw(
   extract_subject
 );
-our $VERSION = '1.15';
+our $VERSION = '1.16';
 
 sub new {
   my $class = shift;

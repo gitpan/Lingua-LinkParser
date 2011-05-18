@@ -11,7 +11,7 @@ use Lingua::LinkParser::Linkage::Word;
 use overload q("") => "new_as_string";
 use vars qw($VERSION);
 
-$VERSION = '1.15';
+$VERSION = '1.16';
 
 sub new {
   unless (@_ == 4) { die 'usage: Lingua::LinkParser::Linkage->new ($index, $sent, $opts)' }

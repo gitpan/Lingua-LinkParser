@@ -7,7 +7,7 @@ require AutoLoader;
 
 use vars qw(@ISA $VERSION @EXPORT %SHORT_DEFS);
 
-$VERSION = '1.15';
+$VERSION = '1.16';
 @ISA    = ("Exporter");
 @EXPORT = qw(define);
 
