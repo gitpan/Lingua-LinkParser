@@ -10,9 +10,8 @@ WriteMakefile(
 
      ## if your libs are in a nonstandard location, changes these, i.e.:
      # 'LIBS'	   => 	"-L/dbrian/link-grammar-4.4.3/link-grammar/.libs/ -llink-grammar", 
-     # 'INC'	   => 	"-I/dbrian/link-grammar-4.4.3/link-grammar/"
-    'LIBS'	   => 	"-llink-grammar", 
-    'INC'	   => 	"-I/usr/local/include/link-grammar/",
+    'LIBS'	   => 	"-L/usr/local/lib/ -llink-grammar", 
+    'INC'	   => 	"-I/usr/local/include/link-grammar/ -I/usr/local/include/",
     'OBJECT'       => 	"",
 );
 

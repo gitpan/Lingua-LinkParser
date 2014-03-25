@@ -1,7 +1,7 @@
 ==================================================================
 
-  Lingua::LinkParser 1.16
-  Copyright 2000-2011 by Danny Brian
+  Lingua::LinkParser 1.17
+  Copyright 2000-2014 by Danny Brian
 
   This program is free software; you can redistribute it and/or 
   modify it under the same terms as Perl itself.
@@ -38,12 +38,10 @@ REQUIREMENTS
 
    To install Lingua::LinkParser you must have already downloaded, 
    compiled and installed the Link Parser package. This package is tested 
-   compatible with at least link-grammar 4.7.4.
+   compatible with at least link-grammar 4.8.x.
 
-   This module has been compiled and tested with Perl 5.6 and 5.8 on Linux 
-   2.2.13 & 2.2.14, and Perl 5.6 and 5.8 on OS X. Any incompatibilities 
-   *should* be the result of lib issues within the Link Parser itself, but 
-   these seem very stable.
+   This module has been compiled and tested with Perl 5.12 on Linux 
+   and on OS X.
 
 INSTALLATION
 

@@ -43,7 +43,7 @@ ok ($link->num_domains > 0, "sublinkage link");
 my @domain_names = $link->domain_names;
 ok (@domain_names > 0, "domain_names");
 
-like ($parser->print_constituent_tree($linkage,1), qr!\(S \(NP We\)!, "print_constituent_tree");
+like ($parser->print_constituent_tree($linkage,2), qr!\[S We \[VP tried to!, "print_constituent_tree");
 
 ok ($linkage->num_links > 0, "num_links");
 

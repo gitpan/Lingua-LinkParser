@@ -132,3 +132,9 @@ Revision history for Perl extension Lingua::LinkParser.
 1.16  May 17 2011
     - minor docs updates, tested with the link parser through 4.7.x.
 
+1.17  March 22 2014
+    - fixed build
+    - fixed dependency on dictionary_create
+    - fixed a broken test
+    - still need to remove dependencies on deprecated functions
+

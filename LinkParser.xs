@@ -41,13 +41,6 @@ dictionary_create_lang(lang)
 Dictionary
 dictionary_create_default_lang()
 
-Dictionary
-dictionary_create(dict_name, pp_name, cons_name, affix_name)
-	char * dict_name
-	char * pp_name
-        char * cons_name
-        char * affix_name
-
 int
 dictionary_delete(dict)
 	Dictionary	dict
